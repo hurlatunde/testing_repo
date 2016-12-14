@@ -1,5 +1,5 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.mychurchmember.mycm" version="1.0.0">
-  <name>MyChurchMember</name>
+  <name>Flextream</name>
   <description>Building africa's biggest Church Management.</description>
   <author href="http://phonegap.com" email="support@phonegap.com">MyChurchMember Team</author>
   <content src="index.html"/>
