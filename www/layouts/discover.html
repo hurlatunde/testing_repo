@@ -1,0 +1,264 @@
+---
+view: landing_interface.html
+---
+
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+        'assets/js/jquery.sticky-kit.min.js',
+    ]);
+</script>
+
+<div class="page-content">
+    <div class="padding p-b-0 padding b-b">
+        <div class="page-title m-b">
+            <h1 class="inline m-a-0">Discover</h1>
+        </div>
+
+        <div style="padding-bottom: 1.5rem">
+            <div class="row row-sm item-masonry item-info-overlay">
+
+                <div class="col-sm-6 text-white m-b-sm">
+                    <div id="owlCarouselFlex" class="owl-carousel owl-theme owl-dots-sm owl-dots-bottom-left ">
+                        {{#tracks}}
+                        <div class="item r">
+                            <div class="item-media primary" style="background: url({{track_art}})center no-repeat; background-size: cover">
+                                <a href="#/track_detail/{{node_id}}" class="item-media-content lazy"
+                                   data-src="{{track_art}}"></a>
+                            </div>
+                            <div class="item-info">
+                                <div>
+                                    <div class="item-media" style="width: 60px;height: 60px;float: left;">
+                                        <a href="#/track_detail/{{node_id}}" class="item-media-content lazy"
+                                           data-src="{{track_art}}"></a>
+                                    </div>
+                                    <div style="margin-left: 10px;float: left;">
+                                        <div class="item-title text-ellipsis">
+                                            <a href="#/track_detail/{{node_id}}">{{track_name}}</a>
+                                        </div>
+                                        <div class="item-author text-sm text-ellipsis">
+                                            <a href="#/artist_detail/" class="text-muted"> by {{artist_name}}</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/tracks}}
+                    </div>
+                </div>
+
+                <div class="col-sm-3 col-xs-12">
+                    <div id="dis_playlist"></div>
+                </div>
+
+                <div class="col-sm-3 col-xs-12 visible-lg">
+                    <div class="item-info-overlay">
+                        <div id="mixSection"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row-col">
+        <div class="col-lg-9 b-r no-border-md">
+            <div class="padding">
+                <!-- gener -->
+                <div id="gener"></div>
+
+                <br>
+
+                <h2 class="widget-title h4 m-b">New Tracks</h2>
+                <div id="lazy-container" class="row">
+                    {{#tracks}}
+                    <div class="col-xs-3 col-sm-3 col-md-2">
+                        <div class="item r" data-id="item-{{node_id}}"
+                             data-src="{{track_source}}">
+                            <div class="item-media">
+                                <a href="#/track_detail/{{node_id}}" class="item-media-content lazy"
+                                   data-src="{{track_art}}"></a>
+                                <div class="item-overlay center">
+                                    <button class="btn-playpause">Play</button>
+                                </div>
+                            </div>
+                            <div class="item-info">
+                                <div class="item-overlay bottom text-right">
+                                    <a href="#" class="btn-favorite">
+                                        <i class="fa fa-heart-o"></i>
+                                    </a>
+                                    <a href="#" class="btn-more" data-toggle="dropdown"><i
+                                            class="fa fa-ellipsis-h"></i></a>
+                                    <div class="dropdown-menu pull-right black lt"></div>
+                                </div>
+                                <div class="item-title text-ellipsis" style="font-size: 13px;">
+                                    <a href="#/track_detail/{{key}}">{{track_name}}</a>
+                                </div>
+                                <div class="item-author text-sm text-ellipsis ">
+                                    <a href="#/artist_detail/{{track_artist}}" class="text-muted"> by
+                                        {{artist_name}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/tracks}}
+                </div>
+
+                <div class="hide">
+                    <h2 class="widget-title h4 m-b">Recommand for you</h2>
+                    <div class="row item-list item-list-md m-b">
+                        <div class="col-sm-6">
+                            <div class="item r" data-id="item-5"
+                                 data-src="http://streaming.radionomy.com/JamendoLounge">
+                                <div class="item-media ">
+                                    <a href="track.detail.html" class="item-media-content"
+                                       style="background-image: url('images/b4.jpg');"></a>
+                                    <div class="item-overlay center">
+                                        <button class="btn-playpause">Play</button>
+                                    </div>
+                                </div>
+                                <div class="item-info">
+                                    <div class="item-overlay bottom text-right">
+                                        <a href="#" class="btn-favorite"><i class="fa fa-heart-o"></i></a>
+                                        <a href="#" class="btn-more" data-toggle="dropdown"><i
+                                                class="fa fa-ellipsis-h"></i></a>
+                                        <div class="dropdown-menu pull-right black lt"></div>
+                                    </div>
+                                    <div class="item-title text-ellipsis">
+                                        <a href="track.detail.html">Live Radio</a>
+                                    </div>
+                                    <div class="item-author text-sm text-ellipsis ">
+                                        <a href="artist.detail.html" class="text-muted">Radionomy</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <a href="#/browse" class="btn btn-sm white rounded jscroll-next">Discover More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 w-xxl w-auto-md">
+
+            <div id="sidebar_stick" class="padding " style="bottom: 60px;">
+                <!-- Trending -->
+                <div id="treading"></div>
+                <hr>
+                <div id="footer_element"></div>
+                <script>includeElement('footer_element', 'footer-element');</script>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    //get all genre
+    FirebaseService.findAll({
+        path: '/genres',
+        listenerType: 'once',
+        eventType: 'value',
+        limit: 8
+    }, function (data) {
+        if (!data.error) {
+            data.geners = data.data;
+            includeElement('gener', 'discover_gener', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    //get 8 playlist
+    FirebaseService.findAll({
+        path: 'playlists',
+        listenerType: 'once',
+        eventType: 'value',
+        limit: 2
+    }, function (data) {
+        if (!data.error) {
+            data.playlists = data.data;
+            includeElement('dis_playlist', 'discover_playlist', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    //firebaseBaseDatabase.ref('uploads').child('played').orderByValue().limitToLast(9).on('value', function (snapshot) {
+
+
+//    firebaseBaseDatabase.ref('uploads').orderByChild('played').limitToLast(4).once('value', function (snapshot) {
+
+//        var childData = snapshot.val();
+//        logMessage(childData);
+
+//        var data = Array();
+//        snapshot.forEach(function (childSnapshot) {
+//            var key = childSnapshot.key;
+//            var childData = childSnapshot.val();
+//            childData.key = key;
+//            data.push(childData);
+//        });
+//
+//        data = data.reverse();
+//        data.trendings = data;
+//    });
+
+//    get 12 trendings track
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('uploads').orderByChild('played').limitToLast(9),
+    }, function (data) {
+        if (!data.error) {
+            var trendings = data.data;
+            data.trendings = trendings.reverse();
+            data.counts = trendings.length;
+            includeElement('treading', 'discover_treading', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    //get mix
+    FirebaseService.findAll({
+        path: 'mixes',
+        listenerType: 'once',
+        eventType: 'value',
+        limit: 6
+    }, function (data) {
+        if (!data.error) {
+            data.mixData = data.data;
+            includeElement('mixSection', 'discover_mix', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    $('#lazy-container .lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+
+    $('#owlCarouselFlex .lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+
+
+    $('#owlCarouselFlex').owlCarousel({
+        items: 1,
+        loop: true,
+        autoplay: true,
+        nav: true
+    });
+
+</script>

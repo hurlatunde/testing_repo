@@ -1,0 +1,40 @@
+<h5 class="m-b">From {{artist_name}}</h5>
+<div class="row m-b">
+
+    {{#albumDatas}}
+    <div class="list_set col-xs-6 col-sm-6 col-md-3">
+        <div class="item">
+            <div class="item-media">
+                <a href="#/album_detail/{{node_id}}" class="item-media-content lazy"
+                   data-src="{{album_art}}"></a>
+            </div>
+            <div class="item-info">
+                <div class="item-title text-ellipsis">
+                    <div class="text-sm text-muted" style="font-size: 18px;">
+                        <a href="#/album_detail/{{node_id}}">{{album_name}}</a>
+                    </div>
+                </div>
+
+                <div class="item-meta text-sm text-muted">
+                <span class="item-meta-stats text-xs ">
+                <i class="fa fa-play text-muted"></i> {{played}}
+                <i class="fa fa-heart m-l-sm text-muted"></i> 220
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/albumDatas}}
+</div>
+
+
+<script>
+    $('.lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+</script>

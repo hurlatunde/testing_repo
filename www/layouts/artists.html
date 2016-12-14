@@ -1,0 +1,101 @@
+---
+view: landing_interface.html
+---
+
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+        'assets/js/jquery.sticky-kit.min.js',
+    ]);
+    $(".sidebar_stick").stick_in_parent();
+</script>
+
+<div class="page-content">
+    <div class="row-col">
+        <div class="col-lg-9 b-r no-border-md">
+            <div class="padding">
+
+
+                <div class="page-title m-b">
+                    <h1 class="inline m-a-0">Artists</h1>
+                    <div class="dropdown inline">
+                        <button class="btn btn-sm no-bg h4 m-y-0 v-b dropdown-toggle text-primary"
+                                data-toggle="dropdown">By name
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item active">
+                                By name
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                Songs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="lazy-container" data-ui-jp="jscroll" >
+                    <div class="row row-lg">
+                        {{#artistsDatas}}
+                        <div class="list_set col-xs-4 col-sm-4 col-md-3">
+                            <div class="item">
+                                <div class="item-media rounded">
+                                    <a href="#/artist_detail/{{node_id}}" class="item-media-content lazy"
+                                       data-src="{{artist_image}}"></a>
+                                </div>
+                                <div class="item-info text-center">
+                                    <div class="item-title text-ellipsis">
+                                        <a href="#/artist_detail/{{node_id}}"> {{artist_name}} </a>
+                                        <div class="text-sm text-muted"> {{artist_real_name}} </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/artistsDatas}}
+                    </div>
+                    <!--<a href="scroll.author.html" class="btn btn-sm white rounded jscroll-next">Show More</a>-->
+                    <div class="text-center">
+                        <a href="scroll.item.html" class="btn btn-sm white rounded jscroll-next">Show More</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3 w-xxl w-auto-md">
+            <div id="sidebar_stick" class="padding" style="bottom: 60px;" data-ui-jp="stick_in_parent">
+
+                <div class="item-info-overlay">
+                    <div id="mixSection"></div>
+                </div>
+
+                <div id="footer_element"></div>
+                <script>includeElement('footer_element', 'footer-element');</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //get mix
+    FirebaseService.findAll({
+        path: '/mixes',
+        limit: 6,
+        listenerType: 'once',
+        eventType: 'value',
+    }, function (data) {
+        if (!data.error) {
+            data.mixData = data.data;
+            includeElement('mixSection', 'discover_mix', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    $('#lazy-container .lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+</script>

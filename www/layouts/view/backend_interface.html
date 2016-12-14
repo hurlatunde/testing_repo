@@ -1,0 +1,25 @@
+<script>
+    $('body').removeClass('black');
+    loadCss('assets/css/admin.css');
+</script>
+
+<div class="container-fluid" style="padding: 0;">
+    <div class="mail-box">
+        <div id="header"></div>
+        <script>includeElement('header', 'header-element');</script>
+        <aside class="lg-side">
+            <div class="inbox-head">
+                <!--<h3>Inbox</h3>-->
+                <form action="#" class="pull-right position">
+                    <div class="input-append">
+                        <input type="text" class="sr-input" placeholder="Search Mail">
+                        <button class="btn sr-btn" type="button"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div id="admin_body" class="inbox-body">
+                {{body}}
+            </div>
+        </aside>
+    </div>
+</div>

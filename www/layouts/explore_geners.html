@@ -1,0 +1,89 @@
+---
+view: landing_interface.html
+---
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+    ]);
+</script>
+
+<div class="page-content">
+    <div class="row-col">
+        <div class="col-lg-9 b-r no-border-md">
+            <div class="padding">
+                <div class="page-title m-b">
+                    <h1 class="inline m-a-0">Genres</h1>
+                </div>
+
+                <div id="lazy-container" data-ui-jp="jscroll">
+                    <div class="row row-lg">
+
+                        {{#genres}}
+                        <div class="list_set col-xs-3 col-sm-3 col-md-4">
+                            <div class="item r">
+                                <div class="item-media item-media-4by3" style="height: 78px;">
+                                    <a href="#/gener/{{key}}"
+                                       class="item-media-content lazy"
+                                       data-src="{{image}}" ></a>
+                                    <div class="gener_center">
+                                        <a href="#/gener/{{key}}" style="font-weight: 600;
+                                        text-transform: capitalize;
+                                        opacity: 1;
+                                            font-size: 16px;
+                                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(0, 0, 0, 0.1);">
+                                            {{name}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                        {{/genres}}
+                        {{^genres}}
+                        <div>
+                            no gener
+                        </div>
+                        {{/genres}}
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 w-xxl w-auto-md">
+            <div id="sidebar_stick" class="padding " style="bottom: 60px;">
+                <!-- Trending -->
+                <div id="treading"></div>
+                <hr>
+                <div id="footer_element"></div>
+                <script>includeElement('footer_element', 'footer-element');</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#sidebar_stick").stick_in_parent();
+
+    $('#lazy-container .lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+    });
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('uploads').orderByChild('played').limitToLast(6),
+    }, function (data) {
+        if (!data.error) {
+            var trendings = data.data;
+            data.trendings = trendings.reverse();
+            data.counts = trendings.length;
+            includeElement('treading', 'discover_treading', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+</script>

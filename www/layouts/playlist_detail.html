@@ -1,0 +1,93 @@
+---
+view: landing_interface.html
+---
+
+
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+        'assets/js/jquery.sticky-kit.min.js',
+    ]);
+</script>
+
+{{#playlistDetails}}
+
+<div class="pos-rlt">
+    <div class="page-bg" data-stellar-ratio="2" style="background-image: url({{playlist_art}});height: 80vh;"></div>
+</div>
+
+<div class="page-content">
+    <div class="padding b-b">
+        <div class="row-col">
+            <div class="col-sm w w-auto-xs m-b">
+                <div class="item w">
+                    <div class="item-media">
+                        <div class="item-media-content" style="background-image: url({{playlist_art}});"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="p-l-md no-padding-xs">
+                    <div class="page-title">
+                        <h1 class="inline"> {{playlist_name}} </h1>
+                        <label class="fa fa-star text-primary text-lg m-b v-m m-l-xs" title="Pro"></label>
+                    </div>
+                    <p class="item-desc text-ellipsis text-muted">{{playlist_detail}}</p>
+                    <div class="item-action m-b">
+                        <a class="btn btn-icon white rounded btn-share pull-right" data-toggle="modal" data-target="#share-modal"><i class="fa fa-share-alt"></i></a>
+                        <button class="btn-playpause text-primary m-r-sm"></button>
+                        <span>9 Albums, 105 Tracks</span>
+                    </div>
+                    <div class="block clearfix m-b">
+                        {{#playlist_tags}}
+                        <a class="btn btn-xs rounded white">{{.}}</a>
+                        {{/playlist_tags}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{/playlistDetails}}
+{{^playlistDetails}}
+
+<div id="missing"></div>
+<script>includeElement('missing', 'missing_details');</script>
+
+{{/playlistDetails}}
+
+<script>
+
+    $("#sidebar_stick").stick_in_parent();
+
+    var playlistTackId = '{{node_id}}';
+    function getUserLikeTracks(playlistTackId, callBackData) {
+        var data = Array();
+        var playlist = firebaseBaseDatabase.ref('playlists_tracks/' + playlistTackId);
+        playlist.on('child_added', function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                var uploadskey = childSnapshot.key;
+                firebaseBaseDatabase.ref('uploads/' + uploadskey).once('value', function (innerSnapshot) {
+                    var key = innerSnapshot.key;
+                    var childData = innerSnapshot.val();
+                    childData.key = key;
+                    data.push(childData);
+                });
+            });
+            callBackData({tracks: data});
+        }, function (error) {
+            callBackData({error: error});
+        });
+    }
+
+    getUserLikeTracks(playlistTackId, function (data) {
+        if (!data.error) {
+            includeElement('tracks_likes', 'like_tracks', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+</script>

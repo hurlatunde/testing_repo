@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-sygnal</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Templates" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linejoin="round">
+        <g id="Template-12" transform="translate(-1015.000000, -2029.000000)" stroke-width="2" stroke="#303030">
+            <g id="Content-61" transform="translate(-436.000000, 1725.000000)">
+                <g id="Items" transform="translate(1167.000000, 305.000000)">
+                    <g id="Item-2" transform="translate(285.000000, 0.000000)">
+                        <g id="icon-sygnal">
+                            <path d="M0,13.3469203 C11.5115,13.3469203 20.84375,22.8144203 20.84375,34.4927536" id="Stroke-1040"></path>
+                            <path d="M0,0.22192029 C18.655875,0.22192029 33.78125,15.5665036 33.78125,34.4927536" id="Stroke-1041"></path>
+                            <path d="M7.90625,30.1177536 C7.90625,32.131712 6.2976875,33.763587 4.3125,33.763587 C2.3273125,33.763587 0.71875,32.131712 0.71875,30.1177536 C0.71875,28.1037953 2.3273125,26.4719203 4.3125,26.4719203 C6.2976875,26.4719203 7.90625,28.1037953 7.90625,30.1177536 L7.90625,30.1177536 Z" id="Stroke-1042"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

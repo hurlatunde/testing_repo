@@ -1,0 +1,189 @@
+
+<div data-page="sendsms" class="page toolbar-fixed">
+    <div class="navbar bg-green" data-theme="green">
+        <div class="navbar-inner">
+            <div class="left"><a href="dashboard.html" class="back link icon-only"><i class="icon icon-back"></i></a></div>
+            <div class="center">Send Sms</div>
+            <div class="right"><a href="#" class="link open-panel icon-only"><i class="icon icon-bars"></i></a></div>
+        </div>
+    </div>
+    <div class="toolbar tabbar bg-green">
+        <div class="toolbar-inner">
+            <a href="#tab1" class="active tab-link">Group</a>
+            <a href="#tab2" class="tab-link">Phone No Base</a>
+            <a href="#tab3" class="tab-link">Plain Message</a></div>
+    </div>
+    <div class="tabs-swipeable-wrap">
+        <div class="tabs">
+
+            <div id="tab1" class="page-content tab active">
+                <div class="content-block">
+                    <div class="list-block">
+                        <form action="sendsms.html" method="GET" id="sendGrp" class="ajax-submit-onchange">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-tel"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Select Church Group</div>
+                                        <div class="item-input">
+                                            <select name="church_group" id="church_group">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Sender Name</div>
+                                        <div class="item-input">
+                                            <input type="text" maxlength="11" name="sender_name" placeholder="Sender Name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Message</div>
+                                        <div class="item-input">
+                                            <input type="hidden" name="type" value="group"/>
+                                            <textarea class="resizable" name="message" id="message1"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>
+                                    <span id="remaining1">160 characters remaining</span>
+                                    <span id="messages1">1 message(s)</span>
+                                </p>
+                            </li>
+                            <li>
+                                <a href="#" class="button button-big button-fill button-raised color-green" id="btn_group_form">Send Group Msg</a>
+                            </li>
+                        </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div id="tab2" class="page-content tab ">
+                <div class="content-block">
+                    <div class="list-block">
+                        <form action="sendsms.html" method="GET" id="sendGrp1"  class="ajax-submit-onchange2">
+                        <ul>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-tel"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Select PhoneBase Group</div>
+                                        <div class="item-input">
+                                            <select name="phone_base_id" id="phone_base">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Sender Name</div>
+                                        <div class="item-input">
+                                            <input type="text" maxlength="11" name="sender_name" placeholder="Sender Name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Message</div>
+                                        <div class="item-input">
+                                            <input type="hidden" name="type" value="phonebase"/>
+                                            <textarea class="resizable" name="message" id="message"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>
+                                    <span id="remaining">160 characters remaining</span>
+                                    <span id="messages">1 message(s)</span>
+                                </p>
+                            </li>
+                            <li>
+                                <a href="#" class="button button-big button-fill button-raised color-green" id="btn_group_form1">Send Msg</a>
+                            </li>
+                        </ul>
+                            </form>
+                   </div>
+            </div>
+                </div>
+
+            <div id="tab3" class="page-content tab">
+                <div class="content-block">
+                    <div class="list-block">
+                        <form action="sendsms.html" method="GET" id="sendGrp2"  class="ajax-submit-onchange2">
+                        <ul>
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-tel"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Enter Tel Phone Numbers seperated by comma</div>
+                                        <div class="item-input">
+                                            <textarea class="resizable" name="phone_no" id="message3"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Sender Name</div>
+                                        <div class="item-input">
+                                            <input type="text" name="sender_name" maxlength="11" placeholder="Sender Name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                                    <div class="item-inner">
+                                        <div class="item-title label">Message</div>
+                                        <div class="item-input">
+                                            <input type="hidden" name="type" value="manual"/>
+                                            <textarea class="resizable" name="message" id="message2"></textarea>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <p>
+                                    <span id="remaining2">160 characters remaining</span>
+                                    <span id="messages2">1 message(s)</span>
+                                </p>
+                            </li>
+                            <li>
+                                <a href="#" class="button button-big button-fill button-raised color-green" id="btn_group_form2">Send Msg</a>
+                            </li>
+                        </ul>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

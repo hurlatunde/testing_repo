@@ -1,0 +1,327 @@
+---
+view: backend_interface.html
+---
+
+<style>
+    .twPc-div {
+        background: #fff none repeat scroll 0 0;
+        border: 1px solid #e1e8ed;
+        border-radius: 6px;
+        height: 200px;
+        max-width: 340px;
+    / / orginal twitter width: 290 px;
+    }
+
+    .twPc-bg {
+        background-image: url({{artist_poster}});
+        background-position: 0 50%;
+        background-size: 100% auto;
+        border-bottom: 1px solid #e1e8ed;
+        border-radius: 4px 4px 0 0;
+        height: 95px;
+        width: 100%;
+    }
+
+    .twPc-block {
+        display: block !important;
+    }
+
+    .twPc-avatarLink {
+        background-color: #fff;
+        border-radius: 6px;
+        display: inline-block !important;
+        float: left;
+        margin: -30px 5px 0 8px;
+        max-width: 100%;
+        padding: 1px;
+        vertical-align: bottom;
+    }
+
+    .twPc-avatarImg {
+        border: 2px solid #fff;
+        border-radius: 7px;
+        box-sizing: border-box;
+        color: #fff;
+        height: 72px;
+        width: 72px;
+    }
+
+    .twPc-divUser {
+        margin: 5px 0 0;
+    }
+
+    .twPc-divName {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 21px;
+    }
+
+    .twPc-divName a {
+        color: inherit !important;
+    }
+
+    .twPc-divStats {
+        margin-left: 11px;
+        padding: 10px 0;
+    }
+
+    .twPc-Arrange {
+        box-sizing: border-box;
+        display: table;
+        margin: 0;
+        min-width: 100%;
+        padding: 0;
+        table-layout: auto;
+    }
+
+    ul.twPc-Arrange {
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .twPc-ArrangeSizeFit {
+        display: table-cell;
+        padding: 0;
+        vertical-align: top;
+    }
+
+    .twPc-ArrangeSizeFit a:hover {
+        text-decoration: none;
+    }
+
+    .twPc-StatValue {
+        display: block;
+        font-size: 18px;
+        font-weight: 500;
+        transition: color 0.15s ease-in-out 0s;
+    }
+
+    .twPc-StatLabel {
+        color: #8899a6;
+        font-size: 10px;
+        letter-spacing: 0.02em;
+        overflow: hidden;
+        text-transform: uppercase;
+        transition: color 0.15s ease-in-out 0s;
+    }
+</style>
+
+<div>
+    <div>
+        <div style="position: relative;">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/backend">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#/backend/list_artists">Artist</a></li>
+                <li class="breadcrumb-item active"> {{artist_name}} <strong>
+                    <small>({{artist_real_name}})</small>
+                </strong></li>
+            </ol>
+            <a style="position: absolute;top: 9px;right: 234px;" href="#/backend/upload_artist_album/{{node_id}}"
+               class="btn btn-danger btn-sm">
+                Upload Album
+            </a>
+            <a style="position: absolute;top: 9px;right: 120px;" href="#/backend/upload_track_video/{{node_id}}"
+               class="btn btn-primary btn-sm">
+                Upload Videos
+            </a>
+            <a style="position: absolute;top: 9px;right: 10px;" href="#/backend/upload_track_music/{{node_id}}"
+               class="btn btn-info btn-sm">
+                Upload Tracks
+            </a>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="twPc-div">
+                            <a class="twPc-bg twPc-block"></a>
+                            <div>
+
+                                <a title="Mert Salih Kaplan" href="https://twitter.com/mertskaplan"
+                                   class="twPc-avatarLink">
+                                    <img alt="Mert Salih Kaplan"
+                                         src="{{artist_image}}"
+                                         class="twPc-avatarImg">
+                                </a>
+
+                                <div class="twPc-divUser">
+                                    <div class="twPc-divName"><a href="#">{{artist_name}}</a></div>
+                                    <span><a href="#"><span>{{artist_real_name}}</span></a></span>
+                                </div>
+
+                                <div class="twPc-divStats">
+                                    <ul class="twPc-Arrange">
+                                        <li class="twPc-ArrangeSizeFit">
+                                            <a href="https://twitter.com/mertskaplan" title="9.840 Tweet">
+                                                <span class="twPc-StatLabel twPc-block">Tweets</span>
+                                                <span class="twPc-StatValue">9.840</span>
+                                            </a>
+                                        </li>
+                                        <li class="twPc-ArrangeSizeFit">
+                                            <a href="https://twitter.com/mertskaplan/following"
+                                               title="885 Following">
+                                                <span class="twPc-StatLabel twPc-block">Following</span>
+                                                <span class="twPc-StatValue">885</span>
+                                            </a>
+                                        </li>
+                                        <li class="twPc-ArrangeSizeFit">
+                                            <a href="https://twitter.com/mertskaplan/followers"
+                                               title="1.810 Followers">
+                                                <span class="twPc-StatLabel twPc-block">Followers</span>
+                                                <span class="twPc-StatValue">1.810</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div id="showsuccess"></div>
+                <div>
+                    <form id="updatePlaylist" class="form-horizontal" action="#" method="post"
+                          enctype="multipart/form-data">
+                        <div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th><input type="checkbox" id="selectAll" /></th>
+                                    <th>#</th>
+                                    <th> Node Key</th>
+                                    <th> Track Name</th>
+                                    <th> Track Genre</th>
+                                    <th> Album</th>
+                                    <th> Genre </th>
+                                    <th> Type</th>
+                                    <th> Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="artist_list_tracks">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                            <label for="playlistGen"> Admin Create Playlist </label>
+                            <select class="form-control" name="playlist_tracks" id="playlistGen">
+                            <option value=""> Select Playlist </option>
+                            </select>
+                            </div>
+                        </div>
+                        <div id="showAlert"></div>
+                        <button class="btn btn-info btn-sm" id="add_to_playlist_button" type="button">
+                            <i class="material-icons"> queue_music </i> Add to Playlist
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('playlists').orderByChild('flextream_admin').equalTo(1),
+    }, function (data) {
+        if (!data.error) {
+            var dataValue = data.data;
+            for (var i = 0; i < dataValue.length; i++) {
+                var name = dataValue[i].playlist_name;
+                $('#playlistGen').append($("<option></option>")
+                        .attr("value", dataValue[i].key)
+                        //.attr('data-image', dataValue[i].album_art)
+                        .text(name));
+            }
+        } else {
+            console.log(data);
+        }
+    });
+
+    $('#selectAll').click(function (e) {
+        $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
+    });
+
+    //    var tags = '{{artist_tags}}';
+    var node_id = '{{node_id}}';
+    //    $("#artistTags").tagsinput('add', tags);
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('/uploads').orderByChild('track_artist').equalTo(node_id),
+    }, function (data) {
+        if (!data.error) {
+            includeElement('artist_list_tracks', 'admin_list_artist_tracks', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    $('#add_to_playlist_button').click(function (e) {
+        e.preventDefault();
+        var formData = formToArray('updatePlaylist');
+
+        if(!formData.track) {
+            var alert = '<div class="alert alert-warning alert-dismissible fade in" role="alert">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button>Error, please select track to add to playlist</div>';
+            $('#showAlert').html(alert);
+            return;
+        }
+
+        if(formData.playlist_tracks == "") {
+            var alert = '<div class="alert alert-warning alert-dismissible fade in" role="alert">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button>Error, please select playlist</div>';
+            $('#showAlert').html(alert);
+            return;
+        }
+
+        var pickecdItems = $("input[name=track]:checked")
+                .map(function () {return this.value;}).get().join(",");
+        pickecdItems = pickecdItems.split(',');
+        var pItems = {};
+        for (i = 0; i < pickecdItems.length; i++) {
+            pItems[pickecdItems[i]] = true;
+        }
+
+        var playlistId = formData.playlist_tracks;
+        FirebaseService.updateData({
+            path: 'playlists/' + playlistId,
+            data: ({playlist_tracks: pItems})
+        }, function (data) {
+            if (!data.error) {
+                console.log(data);
+                increTracksCount();
+            } else {
+                console.log(data);
+            }
+        });
+
+        function increTracksCount() {
+            FirebaseService.incrementValue({
+                path: '/playlists/' + playlistId + '/track',
+                incrementBy: pickecdItems.length
+            }, function (data) {
+                console.log(data);
+                done();
+            });
+        }
+
+        function done() {
+            var alert = '<div class="alert alert-warning alert-dismissible fade in" role="alert">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button> Track added </div>';
+            $('#showsuccess').html(alert);
+            return;
+        }
+    });
+
+</script>

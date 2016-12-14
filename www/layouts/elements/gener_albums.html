@@ -1,0 +1,39 @@
+<div class="padding">
+    <div class="page-title m-b">
+        <h2 class="widget-title h4" style="line-height: 32px;margin-bottom: -5px;">Album</h2>
+        <p> Related Albums </p>
+    </div>
+    <div id="lazy-container">
+        <div class="row row-lg">
+            {{#albumDatas}}
+            <div class="list_set col-xs-3 col-sm-3 col-md-3">
+                <div class="item">
+                    <div class="item-media">
+                        <a href="#/album_detail/{{node_id}}" class="item-media-content lazy"
+                           data-src="{{album_art}}" style="border-radius: 4px;"></a>
+                    </div>
+                    <div class="item-info text-center">
+                        <div class="item-title text-ellipsis">
+                            <div class="text-sm text-muted" style="font-size: 20px;font-weight: 200;line-height: 28px;">
+                                <a href="#/album_detail/{{node_id}}">{{album_name}}</a>
+                            </div>
+                            <a href="#/artist_detail/{{album_artist}}" style="font-size: 12px;"> {{artist_name}} </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/albumDatas}}
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+</script>

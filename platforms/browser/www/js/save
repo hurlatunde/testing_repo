@@ -1,0 +1,119 @@
+// Initialize your app
+var myApp = new Framework7(
+    {
+        material: true
+    }
+);
+
+var options = {
+    // Namespace. Namespace your Basil stored data
+    // default: 'b45i1'
+    namespace: 'mychurchmember',
+
+    // storages. Specify all Basil supported storages and priority order
+    // default: `['local', 'cookie', 'session', 'memory']`
+    storages: ['cookie', 'local'],
+
+    // storage. Specify the default storage to use
+    // default: detect best available storage among the supported ones
+    storage: 'local',
+
+    // expireDays. Default number of days before cookies expiration
+    // default: 365
+    expireDays: 31
+
+};
+
+
+basil = new window.Basil(options);
+
+// Export selectors engine
+var $$ = Dom7;
+
+// Add view
+var mainView = myApp.addView('.view-main', {
+    // Because we use fixed-through navbar we can enable dynamic navbar
+    dynamicNavbar: false
+});
+
+myApp.hideNavbar();
+console.log(basil.get('loggedin'));
+if(!basil.get('loggedin')){
+    mainView.router.loadPage("login.html");
+}else {
+    var church = basil.get('church');
+    $$('.title_head').html('Welcome ' + church.data.full_name);
+    $$('.church_name').html(church.data.church.name);
+    var request_online = basil.get('config');
+    console.log(church.data.church.id);
+    if(!request_online) {
+
+        $$.post(CONFIG.get('GET_CHURCH'), {'church_id': church.data.church.id}, function (result) {
+            basil.set("config",result);
+            request_online = basil.get('config');
+        });
+    }
+
+    request_online = JSON.parse(basil.get('config'));
+    console.log(request_online);
+    $$(".members").html(request_online.data.members);
+    $$(".sms_unit").html(request_online.data.sms_unit);
+    $$(".groups").html(request_online.data.groups);
+    $$(".males").html(request_online.data.males);
+    $$(".female").html(request_online.data.females);
+    $$(".married").html(request_online.data.married);
+    $$(".single").html(request_online.data.single);
+
+}
+
+
+//set up some of my tables
+alasql("CREATE TABLE IF NOT EXISTS users (token string, full_name string, id_num number, email string)");
+
+myApp.onPageInit('login', function (page) {
+    $$('#submit_login').on('click', function () {
+        var queryForm = myApp.formToJSON('#login_form');
+        if(!queryForm.email || !queryForm.password){
+
+            myApp.addNotification({
+                message: 'Validation Error, kindly complete the Login form',
+            });
+
+        }else{
+            myApp.showPreloader('Processing...');
+
+            //do post request
+            $$.post(CONFIG.get('LOGIN_SUBMIT'), queryForm, function (result) {
+                var result = JSON.parse(result);
+                if(result.code != "200"){
+                    myApp.hidePreloader();
+                    myApp.addNotification({
+                        message: 'Invalid Credential, kindly try again'
+                    });
+                }else{
+                    myApp.hidePreloader();
+                    basil.set('loggedin', result.data.token);
+                    basil.set('church', result);
+                    alasql("TRUNCATE TABLE users;");
+                    alasql("INSERT INTO users VALUES ('"+ result.data.token +"','"+ result.data.full_name +"','"+ result.data.id +"','"+ result.data.email +"');");
+
+                    mainView.router.loadPage("index.html");
+                }
+            });
+
+        }
+        console.log(JSON.stringify(queryForm));
+    });
+});
+
+
+
+//handle login action
+
+
+//dashboard Page
+myApp.onPageInit('dashboard', function (page) {
+
+});
+
+

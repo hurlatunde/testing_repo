@@ -1,0 +1,175 @@
+---
+view: landing_interface.html
+---
+
+{{#picks}}
+
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+        'assets/js/jquery.sticky-kit.min.js',
+    ]);
+</script>
+
+<div class="pos-rlt">
+    <div style="height: 80vh;" class="page-bg lazy" data-stellar-ratio="2" data-src="{{playlist_art}}"></div>
+</div>
+
+<div class="page-content">
+    <div class="row-col">
+        <div class="col-lg-3 b-r no-border-md">
+            <div class="padding sidebar_stick">
+                <div class="col-sm w-auto-xs m-b">
+                    <div class="item">
+                        <div class="item-media">
+                            <div class="item-media-content lazy"
+                                 data-src="{{playlist_art}}"></div>
+                            <div class="item-overlay center">
+                                <button class="btn-playpause">Play</button>
+                            </div>
+                        </div>
+                        <div class="item-info">
+                            <div class="item-overlay hide bottom text-right">
+                                <a href="#" class="btn-favorite"><i class="fa fa-heart-o"></i></a>
+                                <a href="#" class="btn-more" data-toggle="dropdown"><i
+                                        class="fa fa-ellipsis-h"></i></a>
+                                <div class="dropdown-menu pull-right black lt"></div>
+                            </div>
+                            <div class="item-title text-ellipsis" style="font-size: 21px;">
+                                <span>{{playlist_name}}</span>
+                            </div>
+                            <div class="item-title text-ellipsis">
+                                <span>by Flextream Playlists</span>
+                            </div>
+                            <div class="item-author text-sm">
+                                <span class="text-muted">{{playlist_detail}}</span>
+                            </div>
+                            <div class="text-center">
+                                <div>{{track}}</div>
+                            </div>
+                            <div class="item-meta text-sm text-muted">
+                                      <span class="item-meta-stats text-xs ">
+                                        <i class="fa fa-play text-muted"></i> 860
+                                        <i class="fa fa-heart m-l-sm text-muted"></i> 240
+                                      </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 w-auto-md b-r">
+            <div class="padding" style="bottom: 60px;" data-ui-jp="stick_in_parent">
+                <!--<h6 class="text text-muted">5 Likes</h6>-->
+                <div>
+                    <div id="playlists_tracks" class="row item-list item-list-sm m-b"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 w-xxl w-auto-md">
+
+            <div class="padding sidebar_stick" style="bottom: 60px;">
+                <div class="item-info-overlay">
+                    <div id="mixSection"></div>
+                </div>
+                <hr>
+                <div id="footer_element"></div>
+                <script>includeElement('footer_element', 'footer-element');</script>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(".sidebar_stick").stick_in_parent();
+
+    $('.lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+
+    //get mix
+    FirebaseService.findAll({
+        path: 'mixes',
+        listenerType: 'once',
+        eventType: 'value',
+        limit: 6
+    }, function (data) {
+        if (!data.error) {
+            data.mixData = data.data;
+            includeElement('mixSection', 'discover_mix', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    var playlistId = '{{node_id}}';
+    getPlaylistTracks(playlistId, function (data) {
+        var track = data.like;
+        var duration;
+        if (track.track_duration) {
+            duration = track.track_duration;
+        } else {
+            duration = '';
+        }
+        //$('#likes_count').html(data.count);
+
+        //includeElement('tracks_likes', 'like_tracks', data);
+        var viewSet = '<div class="col-xs-12"> ' +
+                '<div class="item r" data-id="item-' + track.node_id + '" data-src="' + track.track_source + '"> ' +
+                '<div class="item-media" style="width: 38px; height: 38px;"> ' +
+                '<a href="#/track_detail/' + track.node_id + '" class="item-media-content"  style="background-image: url(' + track.track_art + ');"></a> ' +
+                '<div class="item-overlay center"> ' +
+                '<button class="btn-playpause">Play</button> ' +
+                '</div> ' +
+                '</div> ' +
+                '<div class="item-info" > ' +
+                '<div class="item-overlay bottom text-right"> ' +
+                '<a href="#" class="btn-more" data-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></a> ' +
+                '<div class="dropdown-menu pull-right black lt"></div> ' +
+                '</div> ' +
+                '<div class="item-title text-ellipsis"> <a href="#/track_detail/' + track.node_id + '">' + track.track_name + '</a> </div> ' +
+                '<div class="item-author text-sm text-ellipsis"> <a href="#/artist_detail/' + track.track_artist + '" class="text-muted">by ' + track.artist_name + '</a> | <strong><a href="#/album_detail/' + track.track_album + '" class="text-muted"> ' + track.album_name + '</a></strong> </div> ' +
+                '<div class="hide item-meta text-sm text-muted"> ' +
+                '<span class="item-meta-category"><a href="browse.html" class="label">Soul</a></span> ' +
+                '<span class="item-meta-date text-xs">02.04.2016</span> ' +
+                '</div> ' +
+                '<div class="item-meta text-sm text-muted">' +
+                '<span class="item-meta-right"> ' + duration + ' </span> ' +
+                '</div> ' +
+                '</div> ' +
+                '</div> ' +
+                '</div>';
+        $('#playlists_tracks').append(viewSet).hide().show('slow');
+    });
+
+    function getPlaylistTracks(userId, callBackData) {
+        var likes = firebaseBaseDatabase.ref('playlists/' + userId + '/playlist_tracks').orderByPriority();
+        likes.on('child_added', function (snapshot) {
+            var count = snapshot.numChildren();
+            var key = snapshot.key;
+            firebaseBaseDatabase.ref('uploads').child(key).once('value', function (innerSnapshot) {
+                var obj = innerSnapshot.val();
+                callBackData({like: obj, count: count});
+            });
+        });
+    }
+
+</script>
+
+{{/picks}}
+{{^picks}}
+
+<div id="missing"></div>
+<script>includeElement('missing', 'missing_details');</script>
+
+{{/picks}}
+

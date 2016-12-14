@@ -1,0 +1,65 @@
+
+
+<h2 class="widget-title h4" style="line-height: 10px;">Browse</h2>
+<p>Explore music like never before with flextream gener</p>
+
+<div id="owlCarouselGenre" class="owl-carousel owl-theme owl-dots-center">
+    {{#geners}}
+    <div class="">
+        <div class="item r">
+            <div class="item-media item-media-4by3" style="height: 78px;">
+                <a href="#/gener/{{key}}"
+                   class="item-media-content"
+                   style="background-image: url({{image}});"></a>
+                <div class="gener_center">
+                    <a href="#/gener/{{key}}" style="font-weight: 600;
+                        text-transform: capitalize;
+                        opacity: 1;
+                            font-size: 16px;
+                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(0, 0, 0, 0.1);">
+                        {{name}}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/geners}}
+    <div class="">
+        <div class="item r">
+            <div class="item-media item-media-4by3" style="height: 78px;">
+                <a href="#/explore_geners"
+                   class="item-media-content"
+                   style="background-image: url('assets/img/all.png');"></a>
+                <div class="gener_center">
+                    <a href="#/explore_geners" style="font-weight: 600;
+                        text-transform: capitalize;
+                        opacity: 1;
+                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 -1px 2px rgba(0, 0, 0, 0.1);">
+                        View All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#owlCarouselGenre').owlCarousel({
+        animateOut: 'fadeOut',
+        mouseDrag: false,
+        lazyLoad: true,
+        // items: 1,
+        loop: true,
+        autoplay: true,
+        touchDrag: true,
+        margin: 12,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 2
+            },
+            543: {
+                items: 4
+            }
+        },
+        nav: true
+    });
+</script>

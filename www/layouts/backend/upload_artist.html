@@ -1,0 +1,177 @@
+---
+view: backend_interface.html
+---
+
+<script>
+    loadCss('assets/css/bootstrap-tagsinput.css');
+    loadScript([
+        'assets/js/bootstrap-tagsinput.min.js',
+        'assets/js/admin.js'
+    ]);
+</script>
+
+<div>
+    <div>
+        <div>
+            <h3>Create Artist</h3>
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/backend">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#/backend/list_artists">Artist</a></li>
+                <li class="breadcrumb-item active"> Create Artist</li>
+            </ol>
+        </div>
+
+        <br>
+        <br>
+
+        <div>
+            <div class="row">
+
+                <div class="col-md-8 offset-md-2">
+                    <form id="uploadArtist" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="genreName" name="genre_name" class="form-control" required>
+                        <div class="form-group">
+                            <label for="artistname"> Name </label>
+                            <div class="input-append">
+                                <input id="artistname" type="text" class="sr-input" placeholder="Enter artist name"
+                                       style="border: 1px solid #00a6b2;    width: 72%;">
+                                <button id="getartistDetails" class="btn sr-btn" type="button" style="width: 28%;">
+                                    Discover
+                                </button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="form-group">
+                                <label for="artistNameFilled">Artist Name</label>
+                                <input type="text" name="artist_name" class="form-control" id="artistNameFilled"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="artistNameFilled">Artist Real Name</label>
+                                <input type="text" name="artist_real_name" class="form-control" id="artistRealName"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="artist_bio">Artist Bio</label>
+                                <textarea name="artist_bio" class="form-control" id="artist_bio" rows="6"></textarea>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="artistGenre"> Artist Genre </label>
+                                <select class="form-control" name="artist_genre" required id="artistGenre">
+                                    <option value=" "> -- Select Artist Genre --</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="artistNameFilled">More details Link</label>
+                                <input type="text" name="artist_more_detail_link" class="form-control"
+                                       id="artistDetails" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="artistTags">Artist Tags</label>
+                                <input data-role="tagsinput"
+                                       type="text" name="artist_tags" class="form-control" id="artistTags" required>
+                            </div>
+
+                            <hr>
+                            <div class="form-group">
+                                <label for="art">Artist Art</label>
+                                <input type="file" name="artist_art" class="form-control" id="art">
+                            </div>
+                            <div class="form-group">
+                                <label for="poster">Artist Poster</label>
+                                <input type="file" name="artist_poster" class="form-control" id="poster">
+                            </div>
+                        </div>
+
+                        <button type="button" id="uploadArtistButton" class="btn btn-default">Upload Artist</button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    FirebaseService.findAll({
+        path: '/genres'
+    }, function (data) {
+        if (!data.error) {
+            var dataValue = data.data;
+            for (var i = 0; i < dataValue.length; i++) {
+                var name = dataValue[i].name;
+                $('#artistGenre').append($("<option></option>")
+                        .attr("value", dataValue[i].key)
+                        .text(name));
+            }
+        } else {
+            console.log(data);
+        }
+    });
+
+    $("#artistGenre").change(function (event) {
+        var text = $('#artistGenre option:selected').text();
+        $('#genreName').val(text);
+    });
+
+    var text = $('#trackGenre option:selected').text();
+    $('#genreName').val(text);
+
+    /**
+     * get artist online details
+     */
+    $("#getartistDetails").click(function (e) {
+        var artistName = $('#artistname').val();
+        if (!artistName || artistName == "undefined") {
+            logMessage('please enter an artist name');
+        } else {
+            var url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artistName + '&api_key=' + app.lastFmApikey + '&format=json'
+            ServerSideConnect.apiConnect({
+                endpoint: url
+            }, function (data) {
+                if (!data.error) {
+                    processArtistDetails(data);
+                } else {
+                    // error
+                    console.log(data);
+                }
+            });
+        }
+    });
+
+    function processArtistDetails(artistData) {
+
+        var artist = artistData.artist;
+        $('#artistNameFilled').val(artist.name);
+        $('#artist_bio').val(artist.bio.content);
+        $('#artistDetails').val(artist.bio.links.link.href);
+
+        // var artistImages = artist.image;
+        // for (var i = 0; i < artistImages.length; i++) {
+        //     logMessage(artistImages[i]);
+        //     $("#imgLocation").attr("src", src1);
+        // }
+        //
+        // var artistSimilars = artist.similar.artist;
+        // for (var i = 0; i < artistSimilars.length; i++) {
+        //     logMessage(artistSimilars[i]);
+        // }
+
+        var tags = artist.tags.tag;
+        var tagArray = Array();
+        for (var i = 0; i < tags.length; i++) {
+            var name = tags[i].name;
+            tagArray.push(name.trim());
+        }
+        var t = tagArray.join(",");
+        $("#artistTags").tagsinput('add', t);
+    }
+
+</script>

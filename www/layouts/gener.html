@@ -1,0 +1,94 @@
+---
+view: landing_interface.html
+---
+
+{{#genre}}
+
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+        'assets/js/jquery.sticky-kit.min.js',
+    ]);
+</script>
+
+<div class="pos-rlt">
+    <div class="page-bg" data-stellar-ratio="2" style="background-image: url({{image}});height: 40vh;"></div>
+</div>
+<div class="page-content">
+    <div class="padding b-b">
+        <div class="row-col">
+            <div class="col-sm">
+                <div class="text-center -no-padding-xs" style="padding: 20px 0;">
+                    <div class="page-title">
+                        <h1 class="inline">{{name}}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-col">
+        <div class="col-lg-9 b-r no-border-md">
+            <div id="albumSet"></div>
+            <div id="trackSet"></div>
+        </div>
+        <div class="col-lg-3 w-xxl w-auto-md">
+            <div id="sidebar_stick" class="padding " style="bottom: 60px;">
+                <!-- Trending -->
+                <div id="treading"></div>
+                <hr>
+                <div id="footer_element"></div>
+                <script>includeElement('footer_element', 'footer-element');</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $("#sidebar_stick").stick_in_parent();
+
+    var node_id = '{{node_id}}';
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('/albums').orderByChild('album_genre').equalTo(node_id),
+    }, function (data) {
+        if (!data.error) {
+            data.albumDatas = data.data;
+            includeElement('albumSet', 'gener_albums', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('/uploads').orderByChild('track_genre').equalTo(node_id),
+    }, function (data) {
+        if (!data.error) {
+            data.trackDatas = data.data;
+            includeElement('trackSet', 'gener_tracks', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('uploads').orderByChild('played').limitToLast(6),
+    }, function (data) {
+        if (!data.error) {
+            var trendings = data.data;
+            data.trendings = trendings.reverse();
+            data.counts = trendings.length;
+            includeElement('treading', 'discover_treading', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+</script>
+
+{{/genre}}
+{{^genre}}
+
+<div id="missing"></div>
+<script>includeElement('missing', 'missing_details');</script>
+
+{{/genre}}

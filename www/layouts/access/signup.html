@@ -1,0 +1,82 @@
+---
+view: access.html
+---
+
+<script>
+    loadScript([
+        'assets/js/access.js'
+    ]);
+</script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<div class="center-block w-xxl w-auto-xs p-y-md text-center">
+    <div class="p-a-md" style="padding: 20px;" id="signUpHolder">
+        <div id="showAlert">
+        </div>
+
+        <div id="social_access">
+            <div>
+    <span id="facebookLoginButton" class="btn btn-block indigo text-white m-b-sm">
+        <i class="fa fa-facebook pull-left"></i>
+        Sign in with Facebook
+    </span>
+                <span id="googleLoginButton" class="btn btn-block red text-white">
+        <i class="fa fa-google-plus pull-left"></i>
+        Sign in with Google+
+    </span>
+            </div>
+        </div>
+
+        <div class="m-y text-sm">
+            OR
+        </div>
+        <form id="flextreamSignup" method="post" name="form" action="#">
+            <div class="form-group">
+                <input type="text" name="username"
+                       data-validation="length alphanumeric"
+                       data-validation-length="3-12"
+                       data-validation-error-msg="User name has to be an alphanumeric value (3-12 chars)"
+                       class="form-control" placeholder="Username"
+                       required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email_address"
+                       data-validation="email" class="form-control" placeholder="Email address" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password"
+                       data-validation-strength="2"
+                       data-validation="strength" class="form-control" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <div class="g-recaptcha"
+                     data-theme="dark"
+                     data-callback="recaptchaCallback"
+                     data-sitekey="6LfMyQsUAAAAACIJjZjNXsSvIe8FXXE3WsWVV25d"></div>
+            </div>
+            <div class="m-b-md text-sm">
+                <span class="text-muted">By clicking Sign Up, I agree to the</span>
+                <a href="#/terms_of_services">Terms of service</a>
+                <span class="text-muted">and</span>
+                <a href="#/policy_privacy">Policy Privacy.</a>
+            </div>
+            <input type='submit' id="submitBtn" value="Sign Up" disabled class="btn btn-lg p-x-lg"/>
+        </form>
+        <div class="p-y-lg text-center">
+            <div>Already have an account? <a href="#/signin" class="text-primary _600">Sign in</a></div>
+        </div>
+    </div>
+
+    <div id="spinner" class="_72qNE" style="margin: 120px;display: none">
+        <div class="_1d72G"></div>
+    </div>
+
+</div>
+
+<script>
+    function recaptchaCallback() {
+        $('#submitBtn').removeAttr('disabled');
+    }
+    ;
+</script>

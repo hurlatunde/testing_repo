@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="104px" height="104px" viewBox="0 0 104 104" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>31-multimeda-music-collection</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="3.Multimedia" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Multimedia-(Monochrome)" transform="translate(-98.000000, -703.000000)" stroke="#FE5739" stroke-width="3.5">
+            <g id="31-multimeda-music-collection" transform="translate(100.000000, 705.000000)">
+                <polygon id="Layer-1" fill-opacity="0.474524457" fill="#FE5739" points="90 10 90 0 0 0 0 90 10 90 10 10 90 10"></polygon>
+                <rect id="Layer-2" fill="#FFFFFF" x="10" y="10" width="90" height="90"></rect>
+                <polygon id="Layer-3" fill-opacity="0.514832428" fill="#FE5739" points="78.4647083 24.6444935 78.4647083 40.0720701 42.1366789 46.1646482 42.1366789 30.7629951"></polygon>
+                <ellipse id="Layer-4" fill-opacity="0.46484375" fill="#FE5739" cx="70.8963688" cy="73" rx="7.56833945" ry="6"></ellipse>
+                <path d="M34.5683395,85 C38.7482179,85 42.1366789,82.3137085 42.1366789,79 C42.1366789,75.6862915 38.7482179,73 34.5683395,73 C30.388461,73 27,75.6862915 27,79 C27,82.3137085 30.388461,85 34.5683395,85 Z" id="Layer-5" fill-opacity="0.466513813" fill="#FE5739"></path>
+                <path d="M42.1366789,46.5 L42.1366789,77.7862079" id="Layer-6" fill="#E2F3FB"></path>
+                <path d="M78.4647083,40.5 L78.4647083,72.5" id="Layer-7" fill="#E2F3FB"></path>
+            </g>
+        </g>
+    </g>
+</svg>

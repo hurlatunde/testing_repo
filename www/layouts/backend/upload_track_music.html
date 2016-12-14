@@ -1,0 +1,198 @@
+---
+view: backend_interface.html
+---
+
+<script>
+    loadCss('assets/css/bootstrap-tagsinput.css');
+    loadScript([
+        'assets/js/bootstrap-tagsinput.min.js',
+        'assets/js/admin.js'
+    ]);
+</script>
+
+<div>
+    <div>
+        <div>
+            <h3>Upload Music</h3>
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/backend">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#/backend/list_artist">Tracks</a></li>
+                <li class="breadcrumb-item active"> {{artist_name}} <strong>
+                    <small>({{artist_real_name}})</small>
+                </strong> Tracks </li>
+            </ol>
+        </div>
+
+        <br>
+        <br>
+
+        <div>
+            <div class="row">
+
+                <div class="col-md-8 offset-md-2">
+                    <form id="uploadTrackMusic" class="form-horizontal" action="#" method="post"
+                          enctype="multipart/form-data">
+                        <input type="hidden" value="audio" name="track_type" required>
+                        <input type="hidden" name="artist_name" class="form-control" value="{{artist_name}}" required>
+                        <input type="hidden" id="genreName" name="genre_name" class="form-control" required>
+                        <input type="hidden" id="albumName" name="album_name" class="form-control" required>
+                        <input type="hidden" id="albumImage" name="album_image" class="form-control" required>
+                        <input type="hidden" id="trackDuration" name="track_duration" class="form-control" required>
+                        <input type="hidden" name="likes" value="0" required>
+                        <input type="hidden" name="played" value="0" required>
+                        <input type="hidden" name="track_artist" class="form-control" value="{{node_id}}" required>
+
+                        <div class="form-group">
+                            <label for="trackGenre"> Track Artist </label>
+                            <div>
+                                <h4>{{artist_name}} ({{artist_real_name}})</h4>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="form-group">
+                            <label for="trackGenre"> Track Genre </label>
+                            <select class="form-control" name="track_genre" required id="trackGenre">
+                                <option value=" "> -- Select Track Genre --</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="trackAlbum"> Track Album </label>
+                            <select class="form-control" name="track_album" required id="trackAlbum">
+                                <option value="1">Singles</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <div class="form-group">
+                                <label for="trackName">Track Name</label>
+                                <input type="text" name="track_name" class="form-control" id="trackName"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="track_source">Track file</label>
+                                <input multiple
+                                       type="file"
+                                       name="track_source"
+                                       class="form-control"
+                                       id="track_source">
+                            </div>
+                            <div id="track_art_con" class="form-group">
+                                <label for="track_art">Track Art</label>
+                                <input type="file" name="track_art" class="form-control" id="track_art">
+                            </div>
+                            <div class="form-group">
+                                <label for="trackTags">Track tags</label>
+                                <input type="text" data-role="tagsinput"
+                                       name="track_tags" class="form-control" id="trackTags"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="trackDetails"> Tracks Details </label>
+                                <textarea class="form-control" name="track_details" id="trackDetails"
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+                        <button type="button" id="uploadTracks" class="btn btn-primary">Upload Tracks</button>
+                    </form>
+                    <audio id="audio"></audio>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var artist_node = '{{node_id}}';
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('/albums').orderByChild('album_artist').equalTo(artist_node),
+    }, function (data) {
+        if (!data.error) {
+            var dataValue = data.data;
+            for (var i = 0; i < dataValue.length; i++) {
+                var name = dataValue[i].album_name;
+                $('#trackAlbum').append($("<option></option>")
+                        .attr("value", dataValue[i].key)
+                        .attr('data-image', dataValue[i].album_art)
+                        .text(name));
+            }
+        } else {
+            console.log(data);
+        }
+    });
+
+    FirebaseService.findAll({
+        path: '/genres',
+        listenerType: 'once',
+        eventType: 'value',
+    }, function (data) {
+        if (!data.error) {
+            var dataValue = data.data;
+            for (var i = 0; i < dataValue.length; i++) {
+                var name = dataValue[i].name;
+                $('#trackGenre').append($("<option></option>")
+                        .attr("value", dataValue[i].key)
+                        .text(name));
+            }
+        } else {
+            console.log(data);
+        }
+    });
+
+    $("#trackGenre").change(function (event) {
+        var text = $('#trackGenre option:selected').text();
+        $('#genreName').val(text);
+        //alert("You have Selected  :: "+$(this).val());
+    });
+
+    var text = $('#trackAlbum option:selected').text();
+    $('#albumName').val(text);
+
+    $("#trackAlbum").change(function (event) {
+        var val = $('#trackAlbum option:selected').val();
+        var text = $('#trackAlbum option:selected').text();
+
+        var selected = $(this).find('option:selected');
+        var album_image = selected.data('image');
+
+        if (val != 1) {
+            $('#track_art_con').hide();
+            $('#albumImage').val(album_image);
+        } else {
+            $('#track_art_con').show();
+        }
+        $('#albumName').val(text);
+    });
+
+    //register canplaythrough event to #audio element to can get duration
+    var f_duration =0;  //store duration
+    document.getElementById('audio').addEventListener('canplaythrough', function(e){
+        //add duration in the input field #f_du
+        f_duration = Math.round(e.currentTarget.duration);
+        document.getElementById('trackDuration').value = display(f_duration);
+        URL.revokeObjectURL(obUrl);
+    });
+
+    //when select a file, create an ObjectURL with the file and add it in the #audio element
+    var obUrl;
+    document.getElementById('track_source').addEventListener('change', function(e){
+        var file = e.currentTarget.files[0];
+        //check file extension for audio/video type
+        if(file.name.match(/\.(avi|mp3|mp4|mpeg|ogg)$/i)){
+            obUrl = URL.createObjectURL(file);
+            document.getElementById('audio').setAttribute('src', obUrl);
+        }
+    });
+
+    function display(a){
+        var hours = Math.trunc(a/60);
+        var minutes = a % 60;
+        return hours +":"+ minutes;
+    }
+
+</script>

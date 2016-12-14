@@ -1,0 +1,71 @@
+---
+view: backend_interface.html
+---
+
+<script>
+    loadCss('assets/css/bootstrap-tagsinput.css');
+    loadScript([
+        'assets/js/bootstrap-tagsinput.min.js',
+        'assets/js/admin.js'
+    ]);
+</script>
+
+<div>
+    <div>
+        <div>
+            <h3> Create Playlist </h3>
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/backend">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#/backend/list_playlists">Playlists</a></li>
+                <li class="breadcrumb-item active"> Create Playlist</li>
+            </ol>
+        </div>
+
+        <br>
+        <br>
+        <div>
+
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+
+                    <div>
+                        <form id="createPlaylist" class="form-horizontal" action="#" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="played" value=0 class="form-control" required>
+                            <input type="hidden" name="track" value=0 class="form-control" required>
+                            <input type="hidden" name="likes" value=0 class="form-control" required>
+                            <input type="hidden" name="flextream_admin" value=1 class="form-control" required>
+
+                            <div id="track_art_con" class="form-group">
+                                <label for="playlist_art"> Playlist Art</label>
+                                <input type="file" name="playlist_art" class="form-control" id="playlist_art">
+                            </div>
+                            <div class="form-group">
+                                <label for="trackName">Playlist Name</label>
+                                <input type="text" name="playlist_name" class="form-control" id="trackName"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="trackTags">Playlist tags</label>
+                                <input type="text" data-role="tagsinput"
+                                       name="playlist_tags" class="form-control" id="trackTags"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="album_details"> Playlist Details </label>
+                                <textarea class="form-control" name="Playlist_detail" id="album_details"
+                                          rows="3"></textarea>
+                            </div>
+
+                            <button type="button" id="genPlaylist" class="btn btn-primary"> Create Playlist</button>
+
+                        </form>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

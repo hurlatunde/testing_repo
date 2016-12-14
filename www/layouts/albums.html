@@ -1,0 +1,99 @@
+---
+view: landing_interface.html
+---
+
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+        'assets/js/jquery.sticky-kit.min.js',
+    ]);
+    $(".sidebar_stick").stick_in_parent();
+</script>
+
+<div class="page-content">
+    <div class="row-col">
+        <div class="col-lg-9 b-r no-border-md">
+            <div class="padding">
+
+                <div class="page-title m-b">
+                    <h1 class="inline m-a-0">Albums</h1>
+                    <div class="dropdown inline">
+                        <button class="btn btn-sm no-bg h4 m-y-0 v-b dropdown-toggle text-primary"
+                                data-toggle="dropdown">By name
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item active">
+                                By name
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                Songs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="lazy-container" data-ui-jp="jscroll">
+                    <div class="row row-lg">
+                        {{#albumDatas}}
+                        <div class="list_set col-xs-3 col-sm-3 col-md-2">
+                            <div class="item">
+                                <div class="item-media">
+                                    <a href="#/album_detail/{{node_id}}" class="item-media-content lazy"
+                                       data-src="{{album_art}}"></a>
+                                </div>
+                                <div class="item-info text-center">
+                                    <div class="item-title text-ellipsis">
+                                        <div class="text-sm text-muted"
+                                             style="font-size: 18px;font-weight: 200;line-height: 23px;">
+                                            <a href="#/album_detail/{{node_id}}">{{album_name}}</a>
+                                        </div>
+                                        <a href="#/artist_detail/{{album_artist}}" style="font-size: 12px;">
+                                            {{artist_name}} </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/albumDatas}}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-3 w-xxl w-auto-md">
+            <div id="sidebar_stick" class="padding " style="bottom: 60px;">
+                <div>
+                    <!-- Trending -->
+                    <div id="treading"></div>
+                </div>
+
+                <div id="footer_element"></div>
+                <script>includeElement('footer_element', 'footer-element');</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //get 12 trendings track
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('/uploads').orderByChild('played').limitToLast(6),
+    }, function (data) {
+        if (!data.error) {
+            var trendings = data.data;
+            data.trendings = trendings.reverse();
+            data.counts = trendings.length;
+            includeElement('treading', 'discover_treading', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    $('#lazy-container .lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+    });
+</script>

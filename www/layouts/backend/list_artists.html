@@ -1,0 +1,74 @@
+---
+view: backend_interface.html
+---
+
+<div>
+    <div>
+        <div>
+            <h3>Artists</h3>
+            <div style="position: relative;">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#/backend">Dashboard</a></li>
+                    <li class="breadcrumb-item active"> Artists</li>
+                </ol>
+                <a style="position: absolute;top: 9px;right: 10px;" href="#/backend/upload_artist"
+                   class="btn btn-secondary btn-sm">
+                    Create Artist
+                </a>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <table class="table table-inbox table-hover">
+                    <thead>
+                    <tr>
+                        <!--<th></th>-->
+                        <!--<th></th>-->
+                        <th>Name</th>
+                        <th>Rename</th>
+                        <th>More detail link</th>
+                        <th>Firebase ID</th>
+                        <!--<th></th>-->
+                        <th class="text-center"> Action </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#artistsDatas}}
+                    <!--<tr class="unread">-->
+                    <tr>
+                        <!--<td class="inbox-small-cells">-->
+                            <!--<input type="checkbox" class="mail-checkbox">-->
+                        <!--</td>-->
+                        <!--<td class="inbox-small-cells"><i class="fa fa-certificate" aria-hidden="true"></i></td>-->
+                        <td class="view-message  dont-show">{{artist_name}}</td>
+                        <td class="view-message">{{artist_real_name}}</td>
+                        <td class="view-message">{{artist_more_detail_link}}</td>
+                        <td class="view-message">
+                            <a target="_blank"
+                               href="https://console.firebase.google.com/project/flexmuzik-app-2016-gen/database/data/artists/{{node_id}}"
+                               class="btn btn-success btn-sm">{{node_id}}</a>
+                        </td>
+                        <!--<td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>-->
+                        <td class="view-message  text-center">
+                            <a href="#/backend/view_artist/{{node_id}}"
+                               class="btn btn-info btn-sm">
+                                View
+                            </a>
+                            <a href="#/backend/edit_artist/{{node_id}}"
+                               class="btn btn-primary btn-sm">
+                                Edit
+                            </a>
+                            <a href="#/backend/delete_artist/{{node_id}}"
+                               class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {{/artistsDatas}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="">
+    <div style="margin-bottom: 18px;">
+        <h2 class="widget-title h4" style="margin-bottom: -2px;"> Flextream MIXED </h2>
+        <!--<h3 style="font-size: 1.125rem;line-height: 10px;"> Flextream MIXED </h3>-->
+        <small>Mixes inspired by your favourite music</small>
+    </div>
+    <div>
+        {{#mixData}}
+        <div class="item r">
+            <a href="#">
+                <div class="item-media item-media-4by2" style="height: 62px;">
+                    <span class="item-media-content" style="background-image: url({{image}});"></span>
+                </div>
+                <div class="item-info">
+                    <div class="item-title text-ellipsis" style="line-height: 16px;">
+                        <span>{{name}}</span>
+                    </div>
+                    <div class="item-author text-sm text-ellipsis ">
+                        <span class="text-muted">#{{hastag}}</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {{/mixData}}
+
+        <div class="item r">
+            <a href="#">
+                <div class="item-media item-media-4by2" style="height: 60px;">
+                    <span class="item-media-content" style="background-image: url({{image}});"></span>
+                </div>
+                <div class="item-info">
+                    <div class="item-title text-ellipsis text-center" style="line-height: 14px;">
+                        <span style="font-size: 15px;line-height: 12px;"> View All </span>
+                    </div>
+                    <div class="item-author text-sm text-ellipsis text-center">
+                        <span class="text-muted"> #FlextreamMixed </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,284 @@
+---
+view: landing_interface.html
+---
+
+{{#artistDetails}}
+
+<script>
+    loadScript([
+        'assets/js/pace.min.js',
+        'assets/js/jquery.sticky-kit.min.js',
+    ]);
+    $(".sidebar_stick").stick_in_parent();
+</script>
+
+<div class="pos-rlt">
+    <div class="page-bg" data-stellar-ratio="2" style="background-image: url({{artist_poster}});"></div>
+</div>
+
+<div class="page-content">
+    <div class="padding b-b">
+        <div class="row-col">
+            <div class="col-sm w w-auto-xs m-b">
+                <div class="item w rounded">
+                    <div class="item-media">
+                        <div class="item-media-content" style="background-image: url({{artist_image}});"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="p-l-md no-padding-xs">
+                    <div class="page-title">
+                        <div>
+                            <h1 class="inline">{{artist_name}}</h1>
+                            <label class="fa fa-star text-primary text-lg m-b v-m m-l-xs" title="Pro"></label>
+                            <!--Flextream Premiere-->
+                        </div>
+                        <div class="text-sm text-muted"
+                             style="font-weight: 600;"> {{artist_real_name}}
+                        </div>
+                    </div>
+                    <p class="item-desc text-ellipsis text-muted" data-ui-toggle-class="text-ellipsis">{{artist_bio}}</p>
+                    <div class="item-action m-b">
+                        <a class="btn btn-icon white rounded btn-share pull-right" data-toggle="modal"
+                           data-target="#share-modal"><i class="fa fa-share-alt"></i></a>
+                        <!--<button class="btn-playpause text-primary m-r-sm"></button>-->
+                        <span>{{albums_count}} Albums, {{tracks_count}} Tracks</span>
+                    </div>
+                    <div class="block clearfix m-b">
+                        {{#artist_tags}}
+                        <a class="btn btn-xs rounded white">{{.}}</a>
+                        {{/artist_tags}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-col">
+        <div class="col-lg-9 b-r no-border-md">
+            <div class="padding">
+                <div class="nav-active-border b-primary bottom m-b-md">
+                    <ul class="nav l-h-2x">
+                        <li class="nav-item m-r inline">
+                            <a class="nav-link active" href="#" data-toggle="tab" data-target="#tab_1">Overview</a>
+                        </li>
+                        <li class="nav-item m-r inline">
+                            <a class="nav-link" href="#" data-toggle="tab" data-target="#tab_2">Tracks</a>
+                        </li>
+                        <li class="nav-item m-r inline">
+                            <a class="nav-link" href="#" data-toggle="tab" data-target="#tab_3">Playlists</a>
+                        </li>
+                        <li class="nav-item m-r inline">
+                            <a class="nav-link" href="#" data-toggle="tab" data-target="#tab_4">Profile</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div id="artist_treading"></div>
+                        <!-- artist albums -->
+                        <div id="albums_artist"></div>
+                        <!--<a href="#" class="btn btn-sm white rounded">Show More</a>-->
+                    </div>
+                    <div class="tab-pane" id="tab_2">
+                        <div id="artist_tracks" class="row m-b"></div>
+                        <!--<a href="#" class="btn btn-sm white rounded">Show More</a>-->
+                    </div>
+                    <div class="tab-pane" id="tab_3">
+                        <div class="row m-b">
+                            <div class="col-xs-4 col-sm-4 col-md-3">
+                                <div class="item r" data-id="item-9"
+                                     data-src="http://api.soundcloud.com/tracks/264094434/stream?client_id=a10d44d431ad52868f1bce6d36f5234c">
+                                    <div class="item-media ">
+                                        <a href="track.detail.html" class="item-media-content"
+                                           style="background-image: url('images/b8.jpg');"></a>
+                                        <div class="item-overlay center">
+                                            <button class="btn-playpause">Play</button>
+                                        </div>
+                                    </div>
+                                    <div class="item-info">
+                                        <div class="item-overlay bottom text-right">
+                                            <a href="#" class="btn-favorite"><i class="fa fa-heart-o"></i></a>
+                                            <a href="#" class="btn-more" data-toggle="dropdown"><i
+                                                    class="fa fa-ellipsis-h"></i></a>
+                                            <div class="dropdown-menu pull-right black lt"></div>
+                                        </div>
+                                        <div class="item-title text-ellipsis">
+                                            <a href="track.detail.html">All I Need</a>
+                                        </div>
+                                        <div class="item-author text-sm text-ellipsis hide">
+                                            <a href="artist.detail.html" class="text-muted">Pablo Nouvelle</a>
+                                        </div>
+                                        <div class="item-meta text-sm text-muted">
+              		          <span class="item-meta-stats text-xs ">
+              		          	<i class="fa fa-play text-muted"></i> 4500
+              		          	<i class="fa fa-heart m-l-sm text-muted"></i> 2310
+              		          </span>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-3">
+                                <div class="item r" data-id="item-3"
+                                     data-src="http://api.soundcloud.com/tracks/79031167/stream?client_id=a10d44d431ad52868f1bce6d36f5234c">
+                                    <div class="item-media ">
+                                        <a href="track.detail.html" class="item-media-content"
+                                           style="background-image: url('images/b2.jpg');"></a>
+                                        <div class="item-overlay center">
+                                            <button class="btn-playpause">Play</button>
+                                        </div>
+                                    </div>
+                                    <div class="item-info">
+                                        <div class="item-overlay bottom text-right">
+                                            <a href="#" class="btn-favorite"><i class="fa fa-heart-o"></i></a>
+                                            <a href="#" class="btn-more" data-toggle="dropdown"><i
+                                                    class="fa fa-ellipsis-h"></i></a>
+                                            <div class="dropdown-menu pull-right black lt"></div>
+                                        </div>
+                                        <div class="item-title text-ellipsis">
+                                            <a href="track.detail.html">I Wanna Be In the Cavalry</a>
+                                        </div>
+                                        <div class="item-author text-sm text-ellipsis hide">
+                                            <a href="artist.detail.html" class="text-muted">Jeremy Scott</a>
+                                        </div>
+                                        <div class="item-meta text-sm text-muted">
+              		          <span class="item-meta-stats text-xs ">
+              		          	<i class="fa fa-play text-muted"></i> 300
+              		          	<i class="fa fa-heart m-l-sm text-muted"></i> 10
+              		          </span>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab_4">
+                        <div class="row-col m-b">
+                            <div class="col-xs w-xs text-muted">Location</div>
+                            <div class="col-xs">UK</div>
+                        </div>
+                        <div class="row-col m-b">
+                            <div class="col-xs w-xs text-muted">Website</div>
+                            <div class="col-xs"><a href="http://rachel-platten.com">http://rachel-platten.com</a></div>
+                        </div>
+                        <div class="row-col m-b">
+                            <div class="col-xs w-xs text-muted"></div>
+                            <div class="col-xs">
+                                <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                                    <i class="fa fa-facebook"></i>
+                                    <i class="fa fa-facebook indigo"></i>
+                                </a>
+                                <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                                    <i class="fa fa-twitter"></i>
+                                    <i class="fa fa-twitter light-blue"></i>
+                                </a>
+                                <a href="" class="btn btn-icon btn-social rounded white btn-sm">
+                                    <i class="fa fa-google-plus"></i>
+                                    <i class="fa fa-google-plus red"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 w-xxl w-auto-md">
+            <div id="sidebar_stick" class="padding" style="bottom: 60px;" data-ui-jp="stick_in_parent">
+                <div class="item-info-overlay">
+                    <div id="mixSection"></div>
+                </div>
+                <hr>
+                <!-- Trending -->
+                <div id="treading"></div>
+
+                <div id="footer_element"></div>
+                <script>includeElement('footer_element', 'footer-element');</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var nodeId = '{{node_id}}';
+    var artist_name = '{{artist_name}}';
+    var nodeKey = nodeId+'_played';
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('uploads').orderByChild(nodeKey).limitToLast(4),
+    }, function (data) {
+        if (!data.error) {
+            var trendings = data.data;
+            data.trendings = trendings.reverse();
+            data.counts = trendings.length;
+            includeElement('artist_treading', 'artist_treading', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('albums').orderByChild('album_artist').equalTo(nodeId),
+    }, function (data) {
+        if (!data.error) {
+            data.albumDatas = data.data;
+            data.artist_name = artist_name;
+            includeElement('albums_artist', 'track_details_album', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('uploads').orderByChild('played').limitToLast(6),
+    }, function (data) {
+        if (!data.error) {
+            var trendings = data.data;
+            data.trendings = trendings.reverse();
+            data.counts = trendings.length;
+            includeElement('treading', 'discover_treading', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    FirebaseService.findAll({
+        path: '/mixes',
+        limit: 6,
+        listenerType: 'once',
+        eventType: 'value',
+    }, function (data) {
+        if (!data.error) {
+            data.mixData = data.data;
+            includeElement('mixSection', 'discover_mix', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    //tab2
+    FirebaseService.customRef({
+        customRef: firebaseBaseDatabase.ref('uploads').orderByChild('track_artist').equalTo(nodeId),
+    }, function (data) {
+        if (!data.error) {
+            data.trackDatas = data.data;
+            data.artist_name = artist_name;
+            includeElement('artist_tracks', 'artist_tracks', data);
+        } else {
+            console.log(data);
+        }
+    });
+</script>
+
+{{/artistDetails}}
+{{^artistDetails}}
+
+<div id="missing"></div>
+<script>includeElement('missing', 'missing_details');</script>
+
+{{/artistDetails}}

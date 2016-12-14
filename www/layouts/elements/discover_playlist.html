@@ -1,0 +1,35 @@
+{{#playlists}}
+<div id="plist" class="item r">
+    <div class="item-media ">
+        <a href="#/picks/{{node_id}}" class="item-media-content lazy"
+           data-src="{{playlist_art}}" ></a>
+    </div>
+</div>
+<div class="item r hide">
+    <div class="item-media item-media-4by4">
+        <a href="#/picks/{{node_id}}" class="item-media-content"
+           style="background-image: url({{playlist_art}});"></a>
+    </div>
+    <div class="item-info hide">
+        <div class="item-title text-ellipsis">
+            <a href="#/picks/{{node_id}}">{{playlist_name}}</a>
+        </div>
+        <div class="item-author text-sm text-ellipsis ">
+            <p class="text-muted">
+                <span>{{track}} tracks</span> <span> - </span> <span>{{played}} fans</span>
+            </p>
+        </div>
+    </div>
+</div>
+{{/playlists}}
+
+<script>
+    $('#plist .lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+</script>

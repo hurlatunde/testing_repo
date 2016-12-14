@@ -1,0 +1,26 @@
+
+
+{{#user}}
+<li class="nav-header hidden-folded m-t">
+    <span class="text-xs text-muted">Your collection</span>
+</li>
+<li>
+    <a href="#/profile/{{node_id}}#likes">
+        <span class="nav-label"><b class="label">{{likes}}</b></span>
+        <span class="nav-icon">
+            <img src="assets/svg/likes.svg" style="height: 17px;">
+        </span>
+        <span class="nav-text">Likes</span>
+    </a>
+</li>
+<li class="hide">
+    <a href="#/profile/{{node_id}}#profile_playlist">
+                  <span class="nav-icon">
+                    <i class="material-icons">
+                      queue_music
+                    </i>
+                  </span>
+        <span class="nav-text">Playlists</span>
+    </a>
+</li>
+{{/user}}

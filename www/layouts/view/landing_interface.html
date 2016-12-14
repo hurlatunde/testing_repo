@@ -1,0 +1,458 @@
+<script>
+    loadCss('assets/mediaelement/build/mediaelementplayer.min.css');
+    loadCss('assets/mediaelement/build/mep.css');
+    loadCss('assets/css/owl.carousel.min.css');
+    loadCss('assets/css/owl.theme.css');
+    loadScript([
+        'assets/mediaelement/build/mediaelement-and-player.min.js',
+        'assets/mediaelement/build/mep.js',
+        'assets/js/owl.carousel.min.js',
+        'assets/js/pace.min.js',
+        'assets/js/smart.js',
+        'assets/js/app.js'
+    ]);
+    includeElement('player_element', 'player_element');
+</script>
+
+<div class="app dk" id="app">
+    <div class="app-aside modal fade nav-dropdown">
+        <!-- fluid app aside -->
+        <div class="left navside grey dk" data-layout="column">
+            <div class="navbar no-radius">
+                <a href="#/discover" class="navbar-brand md">
+                    <img src="../assets/img/flextream.png" style="margin-top: 8px; max-height: 28px;">
+                </a>
+            </div>
+            <div data-flex class="hide-scroll">
+                <nav class="scroll nav-stacked nav-active-primary">
+                    <ul id="nav" class="nav" data-ui-nav>
+                        <li class="nav-header hidden-folded">
+                            <span class="text-xs text-muted">Main</span>
+                        </li>
+                        <li {{#discover}} class="active" {{
+                        /discover}}>
+                        <a href="#/discover">
+                                  <span class="nav-icon">
+                                      <img src="assets/svg/discover.svg" style="height: 17px;">
+                                  </span>
+                            <span class="nav-text">Discover</span>
+                        </a>
+                        </li>
+                        <li {{#browse}} class="active" {{
+                        /browse}}>
+                        <a href="#/browse">
+                  <span class="nav-icon">
+                    <img src="assets/svg/browse.svg" style="height: 17px;">
+                  </span>
+                            <span class="nav-text">Browse</span>
+                        </a>
+                        </li>
+                        </li>
+                        <li {{#video}} class="active" {{/video}}>
+                        <a href="#/video">
+                  <span class="nav-icon">
+                    <img src="assets/svg/video.svg" style="height: 17px;">
+                  </span>
+                            <span class="nav-text">Music Video</span>
+                        </a>
+                        </li>
+                        <li {{#charts}} class="active" {{
+                        /charts}} class="hide">
+                        <a href="#/charts">
+                  <span class="nav-icon">
+                    <img src="assets/svg/chart.svg" style="height: 17px;">
+                  </span>
+                            <span class="nav-text">Charts</span>
+                        </a>
+                        </li>
+
+                        <li {{#albums}} class="active" {{
+                        /albums}}>
+                        <a href="#/albums">
+                  <span class="nav-icon">
+                      <img src="assets/svg/album.svg" style="height: 17px;">
+                  </span>
+                            <span class="nav-text">Albums</span>
+                        </a>
+                        </li>
+
+                        <li {{#artists}} class="active" {{
+                        /artists}}>
+                        <a href="#/artists">
+                  <span class="nav-icon">
+                      <img src="assets/svg/artist.svg" style="height: 17px;">
+                  </span>
+                            <span class="nav-text">Artist</span>
+                        </a>
+                        </li>
+
+                        <li>
+                            <a data-toggle="modal" data-target="#search-modal">
+                  <span class="nav-icon">
+                    <i class="material-icons">
+                      search
+                    </i>
+                  </span>
+                                <span class="nav-text">Search</span>
+                            </a>
+                        </li>
+
+                        <!-- collection -->
+                        <div id="collection"></div>
+
+                    </ul>
+                </nav>
+            </div>
+            <div data-flex-no-shrink>
+
+                <!-- profile -->
+                <div id="profile"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="app-content white bg box-shadow-z2" role="main">
+        <!-- mobile menu -->
+        <div class="app-header hidden-lg-up white lt box-shadow-z1">
+            <div class="navbar">
+                <a href="#/discover" class="navbar-brand md">
+                    <img src="../assets/img/flextream.png">
+                </a>
+                <ul class="nav navbar-nav pull-right">
+                    <li class="nav-item">
+                        <a data-toggle="modal" data-target="#aside" class="nav-link">
+                            <i class="material-icons">menu</i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- mobile menu end -->
+
+        <!-- player system -->
+        <div id="player_element"></div>
+
+        <div class="app-body" id="viewContainer">
+            {{body}}
+        </div>
+    </div>
+
+    <div class="modal white lt fade" id="search-modal" data-backdrop="false">
+        <a data-dismiss="modal" class="text-muted text-lg p-x modal-close-btn">&times;</a>
+        <div class="row-col">
+            <div class="p-a-lg h-v row-cell v-m">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <form action="search.html" class="m-b-md">
+                            <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Type keyword"
+                                       data-ui-toggle-class="hide" data-ui-target="#search-result">
+                                <span class="input-group-btn">
+                    <button class="btn b-a no-shadow white" type="submit">Search</button>
+                  </span>
+                            </div>
+                        </form>
+                        <div id="search-result" class="animated fadeIn">
+                            <p class="m-b-md"><strong>23</strong> <span
+                                    class="text-muted">Results found for: </span><strong>Keyword</strong></p>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="row item-list item-list-sm item-list-by m-b">
+                                        <div class="col-xs-12">
+                                            <div class="item r" data-id="item-3"
+                                                 data-src="http://api.soundcloud.com/tracks/79031167/stream?client_id=a10d44d431ad52868f1bce6d36f5234c">
+                                                <div class="item-media ">
+                                                    <a href="track.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/b2.jpg');"></a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="track.detail.html">I Wanna Be In the Cavalry</a>
+                                                    </div>
+                                                    <div class="item-author text-sm text-ellipsis ">
+                                                        <a href="artist.detail.html" class="text-muted">Jeremy Scott</a>
+                                                    </div>
+                                                    <div class="item-meta text-sm text-muted">
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="item r" data-id="item-6"
+                                                 data-src="http://api.soundcloud.com/tracks/236107824/stream?client_id=a10d44d431ad52868f1bce6d36f5234c">
+                                                <div class="item-media ">
+                                                    <a href="track.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/b5.jpg');"></a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="track.detail.html">Body on me</a>
+                                                    </div>
+                                                    <div class="item-author text-sm text-ellipsis ">
+                                                        <a href="artist.detail.html" class="text-muted">Rita Ora</a>
+                                                    </div>
+                                                    <div class="item-meta text-sm text-muted">
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="item r" data-id="item-2"
+                                                 data-src="http://api.soundcloud.com/tracks/259445397/stream?client_id=a10d44d431ad52868f1bce6d36f5234c">
+                                                <div class="item-media ">
+                                                    <a href="track.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/b1.jpg');"></a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="track.detail.html">Fireworks</a>
+                                                    </div>
+                                                    <div class="item-author text-sm text-ellipsis ">
+                                                        <a href="artist.detail.html" class="text-muted">Kygo</a>
+                                                    </div>
+                                                    <div class="item-meta text-sm text-muted">
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="item r" data-id="item-7"
+                                                 data-src="http://api.soundcloud.com/tracks/245566366/stream?client_id=a10d44d431ad52868f1bce6d36f5234c">
+                                                <div class="item-media ">
+                                                    <a href="track.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/b6.jpg');"></a>
+                                                </div>
+                                                <div class="item-info">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="track.detail.html">Reflection (Deluxe)</a>
+                                                    </div>
+                                                    <div class="item-author text-sm text-ellipsis ">
+                                                        <a href="artist.detail.html" class="text-muted">Fifth
+                                                            Harmony</a>
+                                                    </div>
+                                                    <div class="item-meta text-sm text-muted">
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="row item-list item-list-sm item-list-by m-b">
+                                        <div class="col-xs-12">
+                                            <div class="item">
+                                                <div class="item-media rounded ">
+                                                    <a href="artist.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/a7.jpg');"></a>
+                                                </div>
+                                                <div class="item-info ">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="artist.detail.html">Richard Carr</a>
+                                                        <div class="text-sm text-muted">6 songs</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="item">
+                                                <div class="item-media rounded ">
+                                                    <a href="artist.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/a3.jpg');"></a>
+                                                </div>
+                                                <div class="item-info ">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="artist.detail.html">Joe Holmes</a>
+                                                        <div class="text-sm text-muted">24 songs</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="item">
+                                                <div class="item-media rounded ">
+                                                    <a href="artist.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/a5.jpg');"></a>
+                                                </div>
+                                                <div class="item-info ">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="artist.detail.html">Judy Woods</a>
+                                                        <div class="text-sm text-muted">23 songs</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div class="item">
+                                                <div class="item-media rounded ">
+                                                    <a href="artist.detail.html" class="item-media-content"
+                                                       style="background-image: url('images/a4.jpg');"></a>
+                                                </div>
+                                                <div class="item-info ">
+                                                    <div class="item-title text-ellipsis">
+                                                        <a href="artist.detail.html">Judith Garcia</a>
+                                                        <div class="text-sm text-muted">13 songs</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="top-search" class="btn-groups">
+                            <strong class="text-muted">Top searches: </strong>
+                            <a href="#" class="btn btn-xs white">Happy</a>
+                            <a href="#" class="btn btn-xs white">Music</a>
+                            <a href="#" class="btn btn-xs white">Weekend</a>
+                            <a href="#" class="btn btn-xs white">Summer</a>
+                            <a href="#" class="btn btn-xs white">Holiday</a>
+                            <a href="#" class="btn btn-xs white">Blue</a>
+                            <a href="#" class="btn btn-xs white">Soul</a>
+                            <a href="#" class="btn btn-xs white">Calm</a>
+                            <a href="#" class="btn btn-xs white">Nice</a>
+                            <a href="#" class="btn btn-xs white">Home</a>
+                            <a href="#" class="btn btn-xs white">SLeep</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="share-modal" class="modal fade animate">
+        <div class="modal-dialog">
+            <div class="modal-content fade-down">
+                <div class="modal-header">
+
+                    <h5 class="modal-title">Share</h5>
+                </div>
+                <div class="modal-body p-lg">
+                    <div id="share-list" class="m-b">
+                        <a href="" class="btn btn-icon btn-social rounded btn-social-colored indigo" title="Facebook">
+                            <i class="fa fa-facebook"></i>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+
+                        <a href="" class="btn btn-icon btn-social rounded btn-social-colored light-blue"
+                           title="Twitter">
+                            <i class="fa fa-twitter"></i>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+
+                        <a href="" class="btn btn-icon btn-social rounded btn-social-colored red-600" title="Google+">
+                            <i class="fa fa-google-plus"></i>
+                            <i class="fa fa-google-plus"></i>
+                        </a>
+
+                        <a href="" class="btn btn-icon btn-social rounded btn-social-colored blue-grey-600"
+                           title="Trumblr">
+                            <i class="fa fa-tumblr"></i>
+                            <i class="fa fa-tumblr"></i>
+                        </a>
+
+                        <a href="" class="btn btn-icon btn-social rounded btn-social-colored red-700" title="Pinterst">
+                            <i class="fa fa-pinterest"></i>
+                            <i class="fa fa-pinterest"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <input class="form-control" value="http://plamusic.com/slug"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var userId;
+    var user = firebase.auth().currentUser;
+    userId = user.uid;
+
+//    firebase.auth().onAuthStateChanged(function(user) {
+//        if (user) {
+//            userId = user.uid;
+//        } else {
+//            logMessage('login error');
+//        }
+//    });
+//
+
+    FirebaseService.findOne({
+        path: '/users/' + userId,
+        listenerType: 'once',
+        eventType: 'value',
+    }, function (data) {
+        if (!data.error) {
+            data.user = data;
+            includeElement('collection', 'collection_aside', data);
+            includeElement('profile', 'profile_aside', data);
+        } else {
+            console.log(data);
+        }
+    });
+
+    $(document).on('click.btn', '.btn-favorite', function (e) {
+        e.preventDefault();
+        var parentTagartistId = $(this).parent().parent().parent().attr('data-id');
+        var parentTagartistName = $(this).parent().parent().parent().prop('className');
+        parentTagartistId = parentTagartistId.replace('item-', '');
+        parentTagartistName = parentTagartistName.replace(' r', '');
+        parentTagartistName = $(parentTagartistName + ' .item-info .item-author').text();
+
+        likeTrack(parentTagartistId);
+    });
+
+    function likeTrack(parentTagartistId) {
+        var dataSet = {};
+        dataSet.node_id = parentTagartistId;
+
+        FirebaseService.saveData({
+            path: '/likes/' + userId,
+            data: (dataSet)
+        }, function (data) {
+            if (!data.error) {
+                //console.log(data);
+                updateProfileWithLikeCount();
+                likeTrack();
+            } else {
+                console.log(data);
+            }
+        });
+
+        function likeTrack() {
+            FirebaseService.incrementValue({
+                path: '/uploads/' + parentTagartistId + '/likes',
+                incrementBy: 1
+            }, function (data) {
+                logMessage(data);
+            });
+        }
+
+        function updateProfileWithLikeCount() {
+            FirebaseService.incrementValue({
+                path: '/users/' + userId + '/likes',
+                incrementBy: 1
+            }, function (data) {
+                logMessage(data);
+            });
+        }
+    }
+
+    var selector = '#nav li';
+    $(selector).on('click', function () {
+        $(selector).removeClass('active');
+        $(this).addClass('active');
+    });
+
+</script>

@@ -1,0 +1,28 @@
+<div class="nav-fold dropup">
+    <a data-toggle="dropdown">
+      <span class="pull-left">
+          {{#photo}}
+              <img src="images/a3.jpg" alt="..." class="w-32 img-circle">
+          {{/photo}}
+          {{^photo}}
+              <img src="assets/img/icon.png" alt="..." class="w-32 img-circle">
+          {{/photo}}
+      </span>
+      <span class="clear hidden-folded p-x p-y-xs">
+        <span class="block _500 text-ellipsis"> {{username}} </span>
+      </span>
+    </a>
+    <div class="dropdown-menu w dropdown-menu-scale ">
+        <a class="dropdown-item" href="#/profile/{{node_id}}#profile_playlist">
+            <span>Profile</span>
+        </a>
+        <a class="dropdown-item" href="#/profile/{{node_id}}#profile_settings">
+            <span>Settings</span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#/help">
+            Need help?
+        </a>
+        <a class="dropdown-item" href="#/sign_out">Sign out</a>
+    </div>
+</div>

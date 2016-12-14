@@ -1,0 +1,51 @@
+<div class="padding">
+    <div class="page-title m-b">
+        <h2 class="widget-title h4" style="line-height: 32px;margin-bottom: -5px;">Tracks</h2>
+        <p> Related Tracks </p>
+    </div>
+    <div id="lazy-container">
+        <div class="row row-lg">
+            {{#trackDatas}}
+            <div class="col-xs-4 col-sm-4 col-md-2">
+                <div class="item r" data-id="item-{{node_id}}"
+                     data-src="{{track_source}}">
+                    <div class="item-media">
+                        <a href="#/track_detail/{{node_id}}" class="item-media-content track_lazy" data-src="{{track_art}}"></a>
+                        <div class="item-overlay center">
+                            <button class="btn-playpause">Play</button>
+                        </div>
+                    </div>
+                    <div class="item-info">
+                        <div class="item-overlay bottom text-right">
+                            <a href="#" class="btn-favorite">
+                                <i class="fa fa-heart-o"></i>
+                            </a>
+                            <a href="#" class="btn-more" data-toggle="dropdown"><i
+                                    class="fa fa-ellipsis-h"></i></a>
+                            <div class="dropdown-menu pull-right black lt"></div>
+                        </div>
+                        <div class="item-title text-ellipsis">
+                            <a href="#/track_detail/{{key}}">{{track_name}}</a>
+                        </div>
+                        <div class="item-author text-sm text-ellipsis ">
+                            <a href="#/artist_detail/{{track_artist}}" class="text-muted"> by
+                                {{artist_name}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/trackDatas}}
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.track_lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+</script>

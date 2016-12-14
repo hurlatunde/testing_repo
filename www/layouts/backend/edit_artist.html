@@ -1,0 +1,124 @@
+---
+view: backend_interface.html
+---
+
+<div>
+    <div>
+        <div>
+            <h3>Create Artist</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/backend">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#/backend/list_artist">Artist</a></li>
+                <li class="breadcrumb-item active"> {{artist_name}} <strong>
+                    <small>({{artist_real_name}})</small>
+                </strong></li>
+            </ol>
+        </div>
+
+        <br>
+        <br>
+
+        <div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <form id="updateArtist" class="form-horizontal" action="#" method="post"
+                          enctype="multipart/form-data">
+
+                        <div>
+                            <input type="hidden" value="{{node_id}}" name="node_id" required>
+                            <div class="form-group">
+                                <label for="artistNameFilled">Artist Name</label>
+                                <input type="text" value="{{artist_name}}" name="artist_name" class="form-control"
+                                       id="artistNameFilled"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="artistNameFilled">Artist Real Name</label>
+                                <input type="text" value="{{artist_real_name}}" name="artist_real_name"
+                                       class="form-control" id="artistRealName"
+                                       required>
+                            </div>
+                            <div class="form-group">
+                                <label for="artist_bio">Artist Bio</label>
+                                <textarea name="artist_bio" class="form-control" id="artist_bio"
+                                          rows="9">{{artist_bio}}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="artistNameFilled">More details Link</label>
+                                <input type="text" value="{{artist_more_detail_link}}" name="artist_more_detail_link"
+                                       class="form-control"
+                                       id="artistDetails" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="artistTags">Artist Tags</label>
+                                <input data-role="tagsinput"
+                                       type="text" name="artist_tags" class="form-control" id="artistTags" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-default">Upload Artist</button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <div>
+                        <div>
+                            <img src="{{artist_image}}" class="img-responsive" />
+                            <div>
+                                <figure class="text-muted figure"> Artist Art Image </figure>
+                            </div>
+                        </div>
+                        <div>
+                            <img src="{{artist_poster}}" class="img-responsive" />
+                            <div>
+                                <figure class="text-muted figure"> Artist Poster  </figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="well">
+                        <form id="updateArtistGallery" class="form-horizontal" action="#" method="post"
+                              enctype="multipart/form-data">
+                            <div>
+                                <input type="hidden" value="{{node_id}}" name="node_id" required>
+                                <div class="form-group">
+                                    <label for="art">Artist Art</label>
+                                    <input multiple
+                                           type="file"
+                                           name="artist_art[]"
+                                           class="form-control"
+                                           id="art">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-default">Upload Artist</button>
+                        </form>
+                        <hr>
+                        <div id="gallery_set"></div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var tags = '{{artist_tags}}';
+    var node_id = '{{node_id}}';
+    $("#artistTags").tagsinput('add', tags);
+
+    //get mix
+    FirebaseService.findAll({
+        path: '/artists_galleries/'+node_id
+    }, function (data) {
+        if (!data.error) {
+            logMessage(data);
+            includeElement('gallery_set', 'admin_artist_gallery', data);
+        } else {
+            console.log(data);
+        }
+    });
+</script>

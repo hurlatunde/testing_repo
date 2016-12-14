@@ -1,0 +1,131 @@
+---
+view: backend_interface.html
+---
+
+<script>
+    loadCss('assets/css/bootstrap-tagsinput.css');
+    loadScript([
+        'assets/js/bootstrap-tagsinput.min.js',
+        'assets/js/admin.js'
+    ]);
+</script>
+
+<div>
+    <div>
+        <div>
+            <h3>Upload Album</h3>
+
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#/backend">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="#/backend/list_albums">Albums</a></li>
+                <li class="breadcrumb-item active"> {{artist_name}} <strong>
+                    <small>({{artist_real_name}})</small>
+                </strong> Album
+                </li>
+            </ol>
+        </div>
+
+        <br>
+        <br>
+
+        <div>
+            <div class="row">
+
+                <div class="col-md-8 offset-md-2">
+                    <form id="uploadArtistAlbum" class="form-horizontal" action="#" method="post"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="artist_name" class="form-control" value="{{artist_name}}" required>
+                        <input type="hidden" name="album_artist" class="form-control" value="{{node_id}}" required>
+                        <input type="hidden" id="genreName" name="genre_name" class="form-control" required>
+                        <input type="hidden" id="albumName" name="album_name" class="form-control" required>
+
+                        <div class="form-group">
+                            <label> Album Artist </label>
+                            <div>
+                                <h4>{{artist_name}} ({{artist_real_name}})</h4>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="form-group">
+                            <label for="album_name">Album Name</label>
+                            <input type="text" name="album_name" class="form-control" id="album_name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="album_tags">Album tags</label>
+                            <input type="text" data-role="tagsinput"
+                                   name="album_tags" class="form-control" id="album_tags"
+                                   required>
+                        </div>
+
+                        <!--http://stackoverflow.com/questions/12129130/get-current-month-and-date-using-jquery-->
+                        <div class="form-group">
+                            <label for="albumYear"> Album Year </label>
+                            <select class="form-control" name="album_year" required id="albumYear">
+                                <option value=" "> -- Select Album Year --</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="album_art">Album Art</label>
+                            <input type="file" name="album_art" class="form-control" id="album_art">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="albumGenre"> Album Genre </label>
+                            <select class="form-control" name="album_genre" required id="albumGenre">
+                                <option value=" "> -- Select Album Genre --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="album_details"> Album Details </label>
+                            <textarea class="form-control" name="album_detail" id="album_details"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <button type="button" id="uploadAlbum" class="btn btn-primary">Upload Album</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    for (i = new Date().getFullYear(); i > 1900; i--) {
+        $('#albumYear').append($('<option />').val(i).html(i));
+    }
+
+    var d = new Date(),
+            n = d.getMonth(),
+            y = d.getFullYear();
+    $('#months option:eq('+n+')').prop('selected', true);
+    $('#years option[value="'+y+'"]').prop('selected', true);
+
+    FirebaseService.findAll({
+        path: '/genres'
+    }, function (data) {
+        if (!data.error) {
+            var dataValue = data.data;
+            for (var i = 0; i < dataValue.length; i++) {
+                var name = dataValue[i].name;
+                $('#albumGenre').append($("<option></option>")
+                        .attr("value", dataValue[i].key)
+                        .text(name));
+            }
+        } else {
+            console.log(data);
+        }
+    });
+
+    $("#albumGenre").change(function (event) {
+        var text = $('#albumGenre option:selected').text();
+        $('#genreName').val(text);
+    });
+
+    var text = $('#trackGenre option:selected').text();
+    $('#genreName').val(text);
+
+</script>

@@ -1,0 +1,193 @@
+<script>
+
+    FirebaseService.findAll({
+        path: '/uploads',
+        listenerType: 'once',
+        eventType: 'value',
+        limit: 8,
+    }, function (data) {
+        if (!data.error) {
+            var content = Array();
+            var t = data.data;
+            for (i = 0; i < t.length; i++) {
+                var cData = {};
+                var childData = t[i];
+                cData.id = 'item-' + childData.key;
+                cData.title = childData.track_name;
+                cData.except = childData.track_details;
+                cData.link = '#/track_detail/' + childData.key;
+                cData.thumb = {'src': childData.track_art};
+                cData.src = childData.track_source;
+                var inner = {};
+                cData.meta = inner;
+                inner.author = childData.artist_name;
+                inner.authorlink = '#/artist_detail/' + childData.track_artist;
+                inner.date = '30.05.2016';
+                inner.category = childData.genre_name;
+                inner.tag = "Holiday";
+                inner.play = 3200;
+                inner.like = 210;
+                inner.duration = childData.track_duration;
+                content.push(cData);
+
+            }
+            loadPlayer(content);
+        } else {
+            console.log(data);
+        }
+    });
+
+    function loadPlayer(tracks) {
+        var playerElement = $('#playlist');
+        var playlist = playerElement.mepPlaylist({
+            audioHeight: '40',
+            audioWidth: '100%',
+            videoHeight: '40',
+            videoWidth: '100%',
+            audioVolume: 'vertical',
+            mepPlaylistLoop: true,
+            alwaysShowControls: true,
+            mepSkin: 'mejs-audio',
+            mepResponsiveProgress: true,
+            mepSelectors: {
+                playlist: '.playlist',
+                track: '.track',
+                tracklist: '.tracks'
+            },
+            features: [
+                'meplike',
+                'mepartwork',
+                'mepcurrentdetails',
+                'mepplaylist',
+                'mephistory',
+                'mepprevioustrack',
+                'playpause',
+                'mepnexttrack',
+                'progress',
+                'current',
+                'duration',
+                'volume',
+                'mepicons',
+                'meprepeat',
+                'mepshuffle',
+                'mepsource',
+                'mepbuffering',
+                'meptracklist',
+                'mepplaylisttoggle',
+                'youtube'
+            ],
+            mepPlaylistTracks: tracks
+        });
+
+        // get player, then you can use the player.mepAdd(), player.mepRemove(), player.mepSelect()
+        var player = playlist.find('audio, video')[0].player;
+
+        // event on play
+        player.$node.on('play', function (e) {
+            updateDisplay();
+        });
+
+        // event on pause
+        player.$node.on('pause', function (e) {
+            updateDisplay();
+        });
+
+        // update when pjax end
+        $(document).on('pjaxEnd', function () {
+            updateDisplay();
+        });
+
+        // simulate the play btn
+        $(document).on('click.btn', '.btn-playpause', function (e) {
+            e.stopPropagation();
+            var self = $(this);
+            //logMessage(self);
+            if (self.hasClass('is-playing')) {
+                self.removeClass('is-playing');
+                player.pause();
+            } else {
+                var item = getItem(self);
+                //logMessage(item);
+                item && player.mepAdd(item, true);
+            }
+        });
+
+        function updateDisplay() {
+            $('[data-id]').removeClass('active').find('.btn-playpause').removeClass('is-playing').parent().removeClass('active');
+            var track = player.mepGetCurrentTrack();
+            if (!track || !track.id) return;
+            var item = $('[data-id="' + track.id + '"]');
+            if (player.media.paused) {
+                item.removeClass('active').find('.btn-playpause').removeClass('is-playing').parent().removeClass('active');
+            } else {
+                item.addClass('active').find('.btn-playpause').addClass('is-playing').parent().addClass('active');
+            }
+        }
+
+        // get item data, you can use ajax to get data from server
+        function getItem(self) {
+            var item = self.closest('.item');
+
+            // track detail
+            if (!item.attr('data-src')) {
+                self.toggleClass('is-playing');
+                $('#tracks').find('.btn-playpause').first().trigger('click');
+                return false;
+            }
+
+            var obj = {
+                meta: {
+                    author: item.find('.item-author').find('a').text()
+                    , authorlink: item.find('.item-author').find('a').attr('href')
+                }
+                , src: self.closest('[data-src]').attr("data-src")
+                , thumb: {
+                    src: item.find('.item-media-content').css("background-image").replace(/^url\(["']?/, '').replace(/["']?\)$/, '')
+                }
+                , title: item.find('.item-title').find('a').text()
+                , link: item.find('.item-title').find('a').attr('href')
+                , id: self.attr("data-id") ? self.attr("data-id") : self.closest('[data-id]').attr("data-id")
+            };
+            return obj;
+        }
+
+        // event on like btn
+        player.$node.on('like.mep', function (e, trackidSet) {
+            var trackid = trackidSet.replace('item-', '');
+            likeTrack(trackid);
+            $('[track-id=' + trackidSet + ']').toggleClass('is-like');
+        });
+
+        $(document).on('click.btn', '.addToQueque', function (e) {
+            e.stopPropagation();
+            var self = $(this);
+            var item =  treatItem(self);
+            //logMessage(item);
+            //player.addToQueque(item);
+        });
+
+        function treatItem(self) {
+            var item = self.closest('.item');
+            var obj = {
+                meta: {
+                    author: item.find('.item-author').find('a').text()
+                    , authorlink: item.find('.item-author').find('a').attr('href')
+                }
+                , src: self.closest('[data-src]').attr("data-src")
+                , thumb: {
+                    src: item.find('.item-media-content').css("background-image").replace(/^url\(["']?/, '').replace(/["']?\)$/, '')
+                }
+                , title: item.find('.item-title').find('a').text()
+                , link: item.find('.item-title').find('a').attr('href')
+                , id: self.attr("data-id") ? self.attr("data-id") : self.closest('[data-id]').attr("data-id")
+            };
+            return obj;
+        }
+
+    }
+
+</script>
+
+<div class="app-footer app-player grey bg">
+    <div id="playlist" class="playlist" style="width:100%"></div>
+</div>

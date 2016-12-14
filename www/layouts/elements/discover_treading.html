@@ -1,0 +1,35 @@
+<div>
+    <h2 class="widget-title h4 m-b">Treading</h2>
+    <div class="row item-list item-list-sm m-b">
+        {{#trendings}}
+        <div class="col-xs-12">
+            <div class="item r" data-id="item-{{node_id}}" data-src="{{track_source}}">
+                <div class="item-media ">
+                    <a href="#/track_detail/{{node_id}}" class="item-media-content" style="background-image: url({{track_art}});"></a>
+                </div>
+                <div class="item-info">
+                    <div class="item-title text-ellipsis">
+                        <a href="#/track_detail/{{key}}"> {{track_name}} </a>
+                    </div>
+                    <div class="item-author text-sm text-ellipsis ">
+                        <a href="#/artist_detail/{{track_artist}}" class="text-muted"> {{artist_name}} <span>- {{played}} plays</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/trendings}}
+    </div>
+</div>
+
+
+<script>
+
+    $('.track_lazy').lazy({
+        effect: "fadeIn",
+        effectTime: 2000,
+        combined: true,
+        threshold: 0,
+        bind: "event",
+        //placeholder: "assets/img/loading_gif.gif"
+    });
+</script>
