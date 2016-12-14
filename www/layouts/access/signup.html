@@ -8,7 +8,6 @@ view: access.html
     ]);
 </script>
 
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <div class="center-block w-xxl w-auto-xs p-y-md text-center">
     <div class="p-a-md" style="padding: 20px;" id="signUpHolder">
@@ -49,12 +48,7 @@ view: access.html
                        data-validation-strength="2"
                        data-validation="strength" class="form-control" placeholder="Password" required>
             </div>
-            <div class="form-group">
-                <div class="g-recaptcha"
-                     data-theme="dark"
-                     data-callback="recaptchaCallback"
-                     data-sitekey="6LfMyQsUAAAAACIJjZjNXsSvIe8FXXE3WsWVV25d"></div>
-            </div>
+
             <div class="m-b-md text-sm">
                 <span class="text-muted">By clicking Sign Up, I agree to the</span>
                 <a href="#/terms_of_services">Terms of service</a>
@@ -74,9 +68,3 @@ view: access.html
 
 </div>
 
-<script>
-    function recaptchaCallback() {
-        $('#submitBtn').removeAttr('disabled');
-    }
-    ;
-</script>
